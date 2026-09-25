@@ -1,0 +1,3267 @@
+export default {
+  async fetch(request) {
+    return new Response(`<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZAPPY.UZ — User Admin</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --green:#0B3D21;
+  --green-soft:#0F5A3A;
+  --cream:#F8E8D1;
+  --bg:#F5F0E3;
+  --white:#FFFCF7;
+  --text:#0B301B;
+  --muted:#718077;
+  --border:#E3DCCF;
+}
+
+html,
+body{
+  min-height:100%;
+}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+
+/* =========================
+   LOGIN PAGE
+========================= */
+
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px 20px;
+}
+
+.login-wrapper{
+  width:100%;
+  max-width:440px;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.brand{
+  text-align:center;
+  margin-bottom:26px;
+}
+
+.brand-name{
+  color:var(--green);
+  font-size:31px;
+  font-weight:800;
+  letter-spacing:-1.7px;
+  line-height:1;
+}
+
+.brand-subtitle{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.1px;
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card{
+  position:relative;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:36px;
+  box-shadow:
+    0 18px 45px rgba(11,48,27,.055),
+    0 3px 10px rgba(11,48,27,.025);
+}
+.login-language-button{
+  position:absolute;
+  top:18px;
+  right:18px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--white);
+  color:var(--text);
+  font-family:inherit;
+  font-size:12px;
+  font-weight:650;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.login-language-icon{
+  margin-left:6px;
+  color:var(--muted);
+  transform:translateY(1.5px);
+}
+
+.login-language-button svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.login-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:54px;
+  height:3px;
+  transform:translateX(-50%);
+  background:var(--green);
+  border-radius:0 0 4px 4px;
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.title{
+  color:var(--text);
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:-.7px;
+  line-height:1.25;
+  margin-bottom:8px;
+}
+
+.description{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:29px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.field{
+  margin-bottom:18px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:8px;
+  color:var(--text);
+  font-size:13px;
+  font-weight:650;
+}
+
+.input-wrapper{
+  position:relative;
+}
+
+.field input{
+  width:100%;
+  height:52px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--text);
+  padding:0 15px;
+  font-size:15px;
+  outline:none;
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.field input::placeholder{
+  color:#9AA19A;
+}
+
+.field input:hover{
+  border-color:#CFC6B6;
+}
+
+.field input:focus{
+  border-color:var(--green);
+  background:#fff;
+  box-shadow:
+    0 0 0 3px rgba(11,61,33,.075);
+}
+
+.password-input{
+  padding-right:48px !important;
+}
+
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+.password-toggle{
+  position:absolute;
+  top:50%;
+  right:11px;
+  width:32px;
+  height:32px;
+  transform:translateY(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.password-toggle:hover{
+  background:#F5F0E3;
+  color:var(--green);
+}
+
+.password-toggle svg{
+  width:17px;
+  height:17px;
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-button{
+  width:100%;
+  height:52px;
+  margin-top:6px;
+  border:0;
+  border-radius:11px;
+  background:var(--green);
+  color:var(--cream);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.05px;
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    transform .15s ease,
+    box-shadow .2s ease;
+}
+
+.login-button:hover{
+  background:var(--green-soft);
+  box-shadow:
+    0 7px 18px rgba(11,61,33,.12);
+}
+
+.login-button:active{
+  transform:translateY(1px);
+}
+
+.login-button:disabled{
+  opacity:.7;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+  display:none;
+  margin-top:14px;
+  padding:12px 14px;
+  border:1px solid #E8C8C3;
+  border-radius:10px;
+  background:#FBEBE9;
+  color:#A53B31;
+  font-size:13px;
+  line-height:1.45;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  margin-top:20px;
+  text-align:center;
+  color:#92998F;
+  font-size:12px;
+}
+
+/* =========================
+   INVITATIONS PAGE
+========================= */
+
+#invitationsPage{
+  display:none;
+  min-height:100vh;
+  padding:25px 0 70px;
+}
+
+.invitations-container{
+  width:97%;
+  max-width:1440px;
+  margin:0 auto;
+}
+
+.user-name{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px;
+margin-bottom:24px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.user-actions{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.language-button{
+  width:auto;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--white);
+  color:var(--text);
+  cursor:pointer;
+  transition:.2s ease;
+  padding:0 11px;
+}
+.language-select-icon{
+  margin-left:7px;
+  font-size:13px;
+  line-height:1;
+  color:var(--muted);
+transform:translateY(1.5px);
+}
+.language-menu{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+width:180px;
+  padding:8px;
+  background:#fff;
+  border:1px solid var(--border);
+ border-radius:10px;
+  box-shadow:0 20px 50px rgba(11,48,27,.18);
+  z-index:100;
+}
+ .language-menu{
+  isolation:isolate;
+}
+.language-overlay{
+  position:fixed;
+   display:none;
+  inset:0;
+  background:rgba(5,32,19,.28);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  z-index:99;
+}
+
+.language-menu button{
+  width:100%;
+  height:52px;
+  padding:0 14px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--text);
+  text-align:center;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:650;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.language-menu button + button{
+  border-top:1px solid var(--border);
+}
+
+.language-menu button:hover{
+  background:transparent;
+  color:#0F5A3A;
+}
+
+.language-option-content{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+}
+
+.language-option-content svg{
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex-shrink:0;
+}
+
+.language-button svg{
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.logout-button{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  height:38px;
+  padding:0 13px;
+  border:1px solid #E4C9C5;
+  border-radius:9px;
+  background:#FFF8F6;
+  color:#A53B31;
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:650;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.logout-button:hover{
+  background:#FBEDEA;
+  border-color:#DDB9B4;
+}
+
+.logout-button svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.user-info{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.user-avatar{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--cream);
+  color:var(--green);
+  flex-shrink:0;
+}
+
+.user-avatar svg{
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.user-info span{
+  color:var(--text);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-.2px;
+}
+.invitations-heading{
+  padding-top:4px;
+  margin-bottom:30px;
+}
+
+.invitations-heading h1{
+  color:var(--text);
+  font-size:32px;
+  font-weight:750;
+  letter-spacing:-1px;
+  line-height:1.2;
+  margin-bottom:9px;
+}
+
+.invitations-heading p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  max-width:520px;
+}
+
+.invitation-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:18px;
+}
+
+.invitation-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  min-height:205px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:
+    0 12px 30px rgba(11,48,27,.035),
+    0 2px 8px rgba(11,48,27,.02);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
+
+.invitation-card:hover{
+  transform:translateY(-2px);
+  border-color:#D7CFBF;
+  box-shadow:
+    0 16px 34px rgba(11,48,27,.06),
+    0 3px 10px rgba(11,48,27,.025);
+}
+
+.invitation-card h2{
+  color:var(--text);
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:-.45px;
+  line-height:1.3;
+}
+
+.invitation-date{
+  margin-top:10px;
+  color:var(--text);
+  font-size:14px;
+  font-weight:600;
+  line-height:1.5;
+}
+.invitation-actions{
+  display:flex;
+  gap:9px;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+}
+.invitation-actions button{
+  height:42px;
+  padding:0 17px;
+  border-radius:10px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:650;
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .15s ease;
+      display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.invitation-actions button svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex-shrink:0;
+}
+.invitation-actions button:active{
+  transform:translateY(1px);
+}
+
+.secondary-action{
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+}
+
+.secondary-action:hover{
+  background:var(--bg);
+  border-color:#D2C8B8;
+}
+
+.primary-action{
+  border:1px solid var(--green);
+  background:var(--green);
+  color:var(--cream);
+}
+
+.primary-action:hover{
+  background:var(--green-soft);
+  border-color:var(--green-soft);
+}
+
+/* =========================
+   INVITATION EDITOR
+========================= */
+
+.invitation-editor{
+  display:none;
+  width:100%;
+  max-width:none;
+  margin:18px auto 0;
+}
+.invitation-back{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  height:40px;
+  padding:0 14px;
+  margin-bottom:28px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--white);
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:650;
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .15s ease;
+}
+
+.invitation-back:hover{
+  background:var(--bg);
+  border-color:#D2C8B8;
+  color:var(--green);
+}
+
+.invitation-back:active{
+  transform:translateY(1px);
+}
+
+.invitation-back svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.invitation-editor-heading{
+  margin-bottom:30px;
+}
+
+.invitation-editor-heading h1{
+  color:var(--text);
+  font-size:32px;
+  font-weight:750;
+  letter-spacing:-1px;
+  line-height:1.2;
+  margin-bottom:9px;
+}
+
+.invitation-editor-heading p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  max-width:520px;
+}
+
+.invitation-settings{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+ gap:20px;
+}
+
+.invitation-setting-section:nth-child(4){
+  grid-column:2;
+  grid-row:3;
+}
+
+.invitation-setting-section:nth-child(5){
+  grid-column:2;
+  grid-row:2;
+}
+
+.invitation-setting-section:nth-child(6){
+  grid-column:1;
+  grid-row:3;
+}
+.invitation-setting-section{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:
+    0 10px 26px rgba(11,48,27,.025),
+    0 2px 7px rgba(11,48,27,.015);
+}
+
+.invitation-setting-section h2{
+  color:var(--text);
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.3px;
+  line-height:1.35;
+}
+
+.invitation-setting-section p{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+@media(max-width:620px){
+
+  .invitation-editor{
+    margin-top:0;
+  }
+
+  .invitation-back{
+    margin-bottom:24px;
+  }
+
+  .invitation-editor-heading{
+    margin-bottom:24px;
+  }
+
+  .invitation-editor-heading h1{
+    font-size:28px;
+    letter-spacing:-.7px;
+  }
+
+  .invitation-editor-heading p{
+    font-size:15px;
+    line-height:1.55;
+  }
+
+  .invitation-setting-section{
+    padding:19px;
+    border-radius:15px;
+  }
+
+}
+.invitation-fields{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:16px;
+  margin-top:22px;
+}
+
+.invitation-fields .field{
+  margin-bottom:0;
+}
+
+.invitation-fields .field label{
+  display:block;
+  margin-bottom:8px;
+  color:var(--text);
+  font-size:13px;
+  font-weight:650;
+}
+
+.invitation-fields .field input,
+.address-field input{
+  width:100%;
+  height:50px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--text);
+  padding:0 14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.invitation-fields .field input::placeholder{
+  color:#9AA19A;
+}
+
+.invitation-fields .field input:hover{
+  border-color:#CFC6B6;
+}
+
+.invitation-fields .field input:focus{
+  border-color:var(--green);
+  background:#fff;
+  box-shadow:
+    0 0 0 3px rgba(11,61,33,.075);
+}
+.address-fields{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  margin-top:22px;
+}
+
+.address-field{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) auto;
+  align-items:end;
+  gap:12px;
+}
+
+.address-field label{
+  display:block;
+  margin-bottom:8px;
+  color:var(--text);
+  font-size:13px;
+  font-weight:650;
+}
+
+
+
+
+.address-field .invitation-save-button{
+  height:50px;
+  margin-top:0;
+  margin-bottom:0;
+}
+  .invitation-fields .invitation-save-button{
+  margin-top:26px;
+}
+
+.guest-create-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+}
+
+.guest-create-row input{
+  flex:1;
+  min-width:0;
+  height:50px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--text);
+  padding:0 14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.guest-create-row input:focus{
+  border-color:var(--green-soft);
+  box-shadow:0 0 0 3px rgba(15,90,58,.08);
+}
+
+.guest-create-row .invitation-save-button{
+  margin-top:0;
+  flex-shrink:0;
+}
+
+.guest-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:16px;
+}
+
+.guest-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+}
+
+@property --guest-angle{
+  syntax:"<angle>";
+  initial-value:0deg;
+  inherits:false;
+}
+
+.guest-card{
+  position:relative;
+}
+
+.guest-card.guest-card-new::after{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  padding:2px;
+  border-radius:13px;
+  background:conic-gradient(
+    from var(--guest-angle),
+    transparent 0deg,
+    transparent 240deg,
+    var(--green-soft) 320deg,
+    #2FBF71 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+  animation:
+    guestBorderRun 1.2s linear 3,
+    guestBorderFade 3.6s ease forwards;
+}
+
+@keyframes guestBorderRun{
+  to{ --guest-angle:360deg; }
+}
+
+@keyframes guestBorderFade{
+  0%, 80%{ opacity:1; }
+  100%{ opacity:0; }
+}
+
+.guest-card-info{
+  min-width:0;
+  flex:1;
+}
+
+.guest-card-name{
+  color:var(--text);
+  font-size:14px;
+  font-weight:650;
+  line-height:1.35;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.guest-card-link{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.4;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.guest-card-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+}
+
+.guest-card-actions button{
+  height:34px;
+  padding:0 11px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--white);
+  color:var(--text);
+  font-family:inherit;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .15s ease;
+}
+
+.guest-card-actions button:hover{
+  border-color:var(--green-soft);
+  background:#fff;
+}
+
+.guest-card-actions .guest-delete{
+  color:#8A4035;
+}
+
+@media (max-width:700px){
+
+  .guest-card{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .guest-card-actions{
+    width:100%;
+  }
+
+  .guest-card-actions button{
+    flex:1;
+  }
+
+}
+@media (max-width:700px){
+
+  .guest-create-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .guest-create-row input{
+    flex:none;
+    width:100%;
+    height:50px;
+  }
+
+  .guest-create-row .invitation-save-button{
+    width:100%;
+  }
+
+}
+.invitation-save-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+height:50px;
+  padding:0 18px;
+  margin-top:20px;
+  border:1px solid var(--green);
+  border-radius:10px;
+  background:var(--green);
+  color:var(--cream);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:650;
+  line-height:1;
+  cursor:pointer;
+  justify-self:start;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .15s ease,
+    box-shadow .2s ease;
+}
+
+.invitation-save-button:hover{
+  background:var(--green-soft);
+  border-color:var(--green-soft);
+  box-shadow:0 6px 16px rgba(11,61,33,.10);
+}
+
+.invitation-save-button:active{
+  transform:translateY(1px);
+}
+/* =========================
+   MUSIC SETTINGS
+========================= */
+
+.music-settings{
+  margin-top:22px;
+}
+
+.music-url-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+}
+
+.music-url-row input{
+  width:100%;
+  height:50px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--text);
+  padding:0 14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.music-url-row input::placeholder{
+  color:#9AA19A;
+}
+
+.music-url-row input:hover{
+  border-color:#CFC6B6;
+}
+
+.music-url-row input:focus{
+  border-color:var(--green);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(11,61,33,.075);
+}
+
+.music-url-row .invitation-save-button{
+  height:50px;
+  margin-top:0;
+}
+
+.music-editor{
+  display:none;
+  margin-top:22px;
+  padding-top:22px;
+  border-top:1px solid var(--border);
+}
+
+.wave-wrapper{
+  position:relative;
+  width:100%;
+  height:110px;
+  user-select:none;
+  overflow:visible;
+}
+
+#waveform{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:110px;
+  cursor:pointer;
+}
+
+.handle{
+  position:absolute;
+  top:0;
+  width:3px;
+  height:110px;
+  background:var(--green);
+  cursor:ew-resize;
+  z-index:5;
+  touch-action:none;
+}
+
+.handle::before{
+  content:"";
+  position:absolute;
+  top:-5px;
+  left:-6px;
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  background:var(--green);
+}
+  .handle::after{
+  content:"";
+  position:absolute;
+  top:-10px;
+  bottom:-10px;
+  left:-20px;
+  right:-20px;
+}
+
+#startHandle{
+  left:0;
+}
+
+#endHandle{
+  right:0;
+}
+
+.selection{
+  position:absolute;
+  top:0;
+  height:110px;
+  border-top:2px solid var(--green);
+  border-bottom:2px solid var(--green);
+  background:rgba(11,61,33,.045);
+  pointer-events:none;
+  z-index:2;
+}
+
+#progress{
+  position:absolute;
+  top:0;
+  width:2px;
+  height:110px;
+  background:var(--green-soft);
+  z-index:6;
+  pointer-events:none;
+  display:none;
+}
+
+.time-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+}
+
+.music-controls{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:18px;
+}
+
+.music-controls button{
+  height:40px;
+  padding:0 15px;
+  border-radius:10px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:650;
+  cursor:pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .15s ease;
+}
+
+.music-controls button:active{
+  transform:translateY(1px);
+}
+
+.music-controls .secondary-action{
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+}
+
+.music-controls .secondary-action:hover{
+  background:var(--bg);
+  border-color:#D2C8B8;
+}
+
+.music-controls .primary-action{
+  border:1px solid var(--green);
+  background:var(--green);
+  color:var(--cream);
+}
+
+.music-controls .primary-action:hover{
+  background:var(--green-soft);
+  border-color:var(--green-soft);
+}
+
+.music-info{
+  margin-top:13px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+#youtube-player{
+  position:fixed;
+  width:1px;
+  height:1px;
+  left:-100px;
+  top:-100px;
+  opacity:0;
+  pointer-events:none;
+}
+
+@media(max-width:620px){
+
+  .music-url-row{
+    grid-template-columns:1fr;
+  }
+
+  .music-url-row .invitation-save-button{
+    justify-self:start;
+  }
+
+  .music-controls{
+    flex-wrap:wrap;
+  }
+
+}
+@media(max-width:620px){
+
+  .invitation-fields{
+    grid-template-columns:1fr;
+    gap:15px;
+  }
+
+  .invitation-settings{
+    grid-template-columns:1fr;
+    gap:15px;
+  }
+
+  .invitation-setting-section{
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+
+}
+/* =========================
+   INVITATIONS RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+  .invitation-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media(max-width:620px){
+
+  #invitationsPage{
+    padding:32px 0 50px;
+  }
+
+  .invitations-container{
+    width:calc(100% - 32px);
+  }
+
+ .user-name{
+  padding:13px 14px;
+  position:relative;
+  margin-bottom:32px;
+}
+
+.user-info{
+  gap:9px;
+}
+
+.user-avatar{
+  width:34px;
+  height:34px;
+}
+
+.user-info span{
+  font-size:14px;
+}
+
+.logout-button{
+  width:38px;
+  height:36px;
+  padding:0;
+  justify-content:center;
+  gap:0;
+}
+
+.logout-button span{
+  display:none;
+}
+
+.logout-button svg{
+  width:14px;
+  height:14px;
+}
+
+  .invitations-heading{
+    margin-bottom:24px;
+  }
+
+  .invitations-heading h1{
+    font-size:28px;
+    letter-spacing:-.7px;
+  }
+
+  .invitations-heading p{
+    font-size:15px;
+    line-height:1.55;
+  }
+
+  .invitation-grid{
+    grid-template-columns:1fr;
+    gap:13px;
+  }
+
+  .invitation-card{
+    min-height:184px;
+    padding:20px;
+    border-radius:16px;
+  }
+
+.invitation-card h2{
+  font-size:18px;
+  letter-spacing:-.35px;
+}
+
+ .invitation-actions{
+  margin-top:20px;
+}
+.invitation-actions button{
+  flex:1;
+  height:40px;
+  padding:0 9px;
+  font-size:14px;
+  gap:6px;
+}
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:520px){
+
+  #loginPage{
+    padding:20px 16px;
+  }
+
+  .login-wrapper{
+    max-width:100%;
+  }
+
+  .brand{
+    margin-bottom:22px;
+  }
+
+  .brand-name{
+    font-size:28px;
+  }
+
+  .brand-subtitle{
+    margin-top:8px;
+    font-size:12px;
+  }
+
+  .login-card{
+    padding:29px 22px;
+    border-radius:17px;
+  }
+
+  .title{
+    font-size:24px;
+  }
+
+  .description{
+  font-size:15px;
+    margin-bottom:25px;
+  }
+
+  .field{
+    margin-bottom:16px;
+  }
+        .field label{
+    font-size:15px;
+  }
+  .field input,
+  .login-button{
+    height:50px;
+  }
+     .login-button{
+    font-size:16px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<section id="loginPage">
+
+  <main class="login-wrapper">
+
+
+
+    <!-- LOGIN CARD -->
+
+    <div class="login-card">
+      <button
+  class="login-language-button"
+  id="loginLanguageButton"
+  type="button"
+>
+  <span id="loginCurrentLanguage">Lotincha</span>
+
+  <span class="login-language-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 9l6 6 6-6"/>
+    </svg>
+  </span>
+</button>
+   <div class="title" id="loginTitle">Xush kelibsiz</div>
+
+   <div class="description" id="loginDescription">
+  Taklifnomangizni boshqarish uchun hisobingizga kiring.
+</div>
+
+      <form id="loginForm">
+
+
+        <!-- LOGIN -->
+
+        <div class="field">
+
+        <label for="login" id="loginLabel">Login</label>
+          <div class="input-wrapper">
+
+            <input
+              type="text"
+              id="login"
+              autocomplete="username"
+              placeholder="Loginingizni kiriting"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="field">
+
+       <label for="password" id="passwordLabel">Parol</label>
+
+          <div class="input-wrapper">
+
+            <input
+              type="password"
+              id="password"
+              class="password-input"
+              autocomplete="current-password"
+              placeholder="Parolingizni kiriting"
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              id="togglePassword"
+              aria-label="Parolni ko‘rsatish"
+            >
+
+              <svg
+                id="eyeIcon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+                <circle cx="12" cy="12" r="2.5"/>
+              </svg>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+          type="submit"
+          class="login-button"
+          id="loginButton"
+        >
+          Kirish
+        </button>
+
+
+        <!-- ERROR -->
+
+        <div
+          class="error"
+          id="error"
+        >
+          Login yoki parol noto‘g‘ri.
+        </div>
+
+
+      </form>
+
+    </div>
+
+
+
+  </main>
+</section>
+
+<section id="invitationsPage">
+
+  <div class="invitations-container">
+
+<div class="user-name">
+
+  <div class="user-info">
+
+    <div class="user-avatar">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="8" r="3.2"/>
+        <path d="M5.5 19c.8-3.1 3.1-5 6.5-5s5.7 1.9 6.5 5"/>
+      </svg>
+    </div>
+
+       <span id="userName">Sardor Sobirov</span>
+
+  </div>
+
+  <div class="user-actions">
+
+    <button
+      class="language-button"
+      id="languageButton"
+      type="button"
+      aria-label="Tilni tanlash"
+    >
+     <span id="currentLanguage">Lotincha</span>
+<span class="language-select-icon">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 9l6 6 6-6"/>
+  </svg>
+</span>
+    </button>
+
+    
+
+    <button class="logout-button" id="logoutButton">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+        <path d="M21 19V5a2 2 0 0 0-2-2h-7"/>
+      </svg>
+      <span>Akkauntdan chiqish</span>
+    </button>
+
+  </div>
+
+</div>
+    <div class="invitations-heading">
+      <h1>Taklifnomalarim</h1>
+
+      <p>
+        Taklifnomangizni tanlang, o‘zgartiring, saqlang va ko‘ring.
+      </p>
+    </div>
+
+    <div class="invitation-grid">
+
+      <article class="invitation-card">
+
+        <div class="invitation-card-top">
+
+          <div>
+            <h2>Sardor & Dilnoza</h2>
+
+            <div class="invitation-date">
+              Amal qilish muddati: 23.11.2026
+            </div>
+          </div>
+
+        </div>
+
+        <div class="invitation-actions">
+<button class="secondary-action">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+    <circle cx="12" cy="12" r="2.5"/>
+  </svg>
+  <span>Ko‘rish</span>
+</button>
+
+  <button
+  class="primary-action"
+  id="editInvitationButton"
+  type="button"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+  </svg>
+  <span>O‘zgartirish</span>
+</button>
+
+        </div>
+
+      </article>
+
+
+    </div>
+      
+<div class="invitation-editor" id="invitationEditor">
+
+  <button
+    type="button"
+    class="invitation-back"
+    id="invitationBackButton"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+    <span>Orqaga</span>
+  </button>
+
+  <div class="invitation-editor-heading">
+    <h1>Taklifnoma sozlamalari</h1>
+
+    <p>
+      Taklifnomangizdagi ma’lumotlarni shu yerdan boshqaring.
+    </p>
+  </div>
+
+  <div class="invitation-settings">
+
+<section class="invitation-setting-section">
+  <h2>Ismlar</h2>
+  <p>Taklifnomada ko‘rsatiladigan ismlarni kiriting.</p>
+
+  <div class="invitation-fields">
+
+    <div class="field">
+      <label for="groomName">Kuyov ismi</label>
+      <input
+        type="text"
+        id="groomName"
+        placeholder="Kuyov ismini kiriting"
+      >
+    </div>
+
+    <div class="field">
+      <label for="brideName">Kelin ismi</label>
+      <input
+        type="text"
+        id="brideName"
+        placeholder="Kelin ismini kiriting"
+      >
+    </div>
+
+  </div>
+
+  <button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+</section>
+
+  <section class="invitation-setting-section">
+  <h2>Sana va vaqt</h2>
+  <p>Tadbir sanasi va vaqtini boshqaring.</p>
+
+  <div class="invitation-fields">
+
+    <div class="field">
+      <label for="eventDate">Tadbir sanasi</label>
+     <input
+        type="text"
+        id="eventDate"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="KK.OO.YYYY"
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="field">
+      <label for="eventTime">Tadbir vaqti</label>
+        <input
+        type="text"
+        id="eventTime"
+        inputmode="numeric"
+        maxlength="5"
+        placeholder="SS:DD"
+        autocomplete="off"
+      >
+    </div>
+
+  </div>
+
+  <button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+</section>
+
+<section class="invitation-setting-section">
+  <h2>Manzil</h2>
+  <p>Tadbir manzilini boshqaring.</p>
+
+  <div class="address-fields">
+
+    <div class="address-field">
+  <input
+    type="text"
+    id="eventAddress"
+    placeholder="Namuna ko‘cha, Falon to‘yxona, 33"
+  >
+  <button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+</div>
+
+<div class="address-field">
+  <input
+    type="url"
+    id="googleMapsLink"
+    placeholder="Google Maps havolasini kiriting"
+  >
+  <button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+</div>
+
+<div class="address-field">
+  <input
+    type="url"
+    id="yandexMapsLink"
+    placeholder="Yandex Maps havolasini kiriting"
+  >
+  <button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+</div>
+
+  </div>
+</section>
+
+  <section class="invitation-setting-section">
+  <h2>Mehmonlar</h2>
+
+  <p>
+    Har bir mehmoningizga o‘z ismi bilan taklifnoma havolasini yuboring.
+  </p>
+
+  <div class="guest-create-row">
+
+    <input
+      type="text"
+      id="guestName"
+      placeholder="Mehmon ismini kiriting"
+    >
+
+    <button
+      type="button"
+      class="primary-action invitation-save-button"
+      id="createGuestLink"
+    >
+      Havola yaratish
+    </button>
+
+  </div>
+
+  <div
+    class="guest-list"
+    id="guestList"
+  ></div>
+
+</section>
+
+<section class="invitation-setting-section">
+  <h2>Aloqa</h2>
+  <p>Bog‘lanish uchun telefon raqamlarini kiriting.</p>
+
+  <div class="invitation-fields">
+
+    <div class="field">
+      <label for="phoneOne">Telefon raqami</label>
+      <input
+        type="tel"
+        id="phoneOne"
+        placeholder="+998 90 123 45 67"
+      >
+    </div>
+
+    <div class="field">
+      <label for="phoneTwo">Telefon raqami</label>
+      <input
+        type="tel"
+        id="phoneTwo"
+        placeholder="+998 90 123 45 67"
+      >
+    </div>
+    <div class="field">
+  <label for="cardNumber">Karta raqami</label>
+  <input
+    type="text"
+    id="cardNumber"
+    placeholder="8600 0000 0000 0000"
+  >
+</div>
+<button
+    type="button"
+    class="primary-action invitation-save-button"
+  >
+    Saqlash
+  </button>
+  </div>
+
+  
+</section>
+
+ <section class="invitation-setting-section">
+  <h2>Fon musiqasi</h2>
+  <p>Taklifnomangiz uchun fon musiqasini sozlang.</p>
+
+  <div class="music-settings">
+
+    <div class="music-url-row">
+      <input
+        type="url"
+        id="youtubeUrl"
+        placeholder="YouTube havolasini kiriting"
+      >
+
+      <button
+        type="button"
+        class="primary-action invitation-save-button"
+        id="loadBtn"
+      >
+        Yuklash
+      </button>
+    </div>
+
+    <div id="editor" class="music-editor">
+
+      <div class="wave-wrapper">
+        <canvas id="waveform"></canvas>
+
+        <div
+          id="selection"
+          class="selection"
+        ></div>
+
+        <div
+          id="startHandle"
+          class="handle"
+        ></div>
+
+        <div
+          id="endHandle"
+          class="handle"
+        ></div>
+
+        <div id="progress"></div>
+      </div>
+
+      <div class="time-row">
+        <span id="startTime">00:00</span>
+        <span id="currentTime">00:00</span>
+        <span id="endTime">00:00</span>
+      </div>
+
+    <div class="music-controls">
+
+  <button
+    type="button"
+    class="primary-action"
+    id="saveBtn"
+  >
+    Saqlash
+  </button>
+
+</div>
+
+      <div class="music-info">
+        START yoki END nuqtasini suring.
+        Surish vaqtida audio avtomatik eshitiladi.
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="youtube-player"></div>
+</section>
+
+  </div>
+
+</div>
+  </div>
+
+</section>
+
+
+<div class="language-overlay" id="languageOverlay"></div>
+    <div class="language-menu" id="languageMenu">
+
+   <button type="button" data-lang="uz-lat">
+  <span class="language-option-content">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9"/>
+      <path d="M12 3c-2.5 2.5-3.8 5.5-3.8 9s1.3 6.5 3.8 9"/>
+    </svg>
+    <span>Lotincha</span>
+  </span>
+</button>
+
+     <button type="button" data-lang="uz-cyr">
+  <span class="language-option-content">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9"/>
+      <path d="M12 3c-2.5 2.5-3.8 5.5-3.8 9s1.3 6.5 3.8 9"/>
+    </svg>
+   <span>Кирилча</span>
+  </span>
+</button>
+
+    </div>
+
+<script>
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const loginInput =
+  document.getElementById("login");
+
+const passwordInput =
+  document.getElementById("password");
+
+const togglePassword =
+  document.getElementById("togglePassword");
+
+const eyeIcon =
+  document.getElementById("eyeIcon");
+
+const error =
+  document.getElementById("error");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+    function showFirstName(fullName){
+  return fullName.trim().split(" ")[0];
+}
+
+document.getElementById("userName").textContent =
+  showFirstName(document.getElementById("userName").textContent);
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+togglePassword.addEventListener(
+  "click",
+  function(){
+
+    const isPassword =
+      passwordInput.type === "password";
+
+    passwordInput.type =
+      isPassword ? "text" : "password";
+
+    togglePassword.setAttribute(
+      "aria-label",
+      isPassword
+        ? "Parolni yashirish"
+        : "Parolni ko‘rsatish"
+    );
+
+    if(isPassword){
+
+      eyeIcon.innerHTML = \`
+        <path d="M3 3l18 18"/>
+        <path d="M10.6 5.1A10.7 10.7 0 0 1 12 5c6 0 9.5 7 9.5 7a18 18 0 0 1-3.1 3.9"/>
+        <path d="M6.6 6.6C3.7 8.4 2.5 12 2.5 12s3.5 7 9.5 7c1.6 0 3-.4 4.2-1"/>
+        <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+      \`;
+
+    }else{
+
+      eyeIcon.innerHTML = \`
+        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+        <circle cx="12" cy="12" r="2.5"/>
+      \`;
+
+    }
+
+  }
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+loginForm.addEventListener(
+  "submit",
+  function(event){
+
+    event.preventDefault();
+
+    const login =
+      loginInput.value.trim();
+
+    const password =
+      passwordInput.value.trim();
+
+
+    error.style.display = "none";
+
+
+    if(!login || !password){
+
+    error.textContent =
+        loginCurrentLanguage.textContent === "Кирилча"
+          ? "Логин ва паролни киритинг."
+          : "Login va parolni kiriting.";
+
+      error.style.display =
+        "block";
+
+      if(!login){
+        loginInput.focus();
+      }else{
+        passwordInput.focus();
+      }
+
+      return;
+
+    }
+
+
+    /*
+      Hozircha frontend bosqichi.
+      Real authentication keyinchalik backend
+      bosqichida ulanadi.
+    */
+
+    loginButton.disabled = true;
+
+    loginButton.textContent =
+      loginCurrentLanguage.textContent === "Кирилча"
+        ? "Текширилмоқда..."
+        : "Tekshirilmoqda...";
+
+setTimeout(function(){
+
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("invitationsPage").style.display = "block";
+
+}, 700);
+
+  }
+);
+const languageButton =
+  document.getElementById("languageButton");
+
+  const loginLanguageButton = document.getElementById("loginLanguageButton");
+
+  const languageMenu =
+  document.getElementById("languageMenu");
+
+ const loginCurrentLanguage =
+  document.getElementById("loginCurrentLanguage");
+
+const languageOverlay =
+  document.getElementById("languageOverlay");
+
+loginLanguageButton.addEventListener("click", function(){
+  languageMenu.style.display = "block";
+  languageOverlay.style.display = "block";
+});
+document.querySelectorAll(".language-menu button").forEach(function(button){
+  button.addEventListener("click", function(){
+    const selectedLanguage = this.dataset.lang;
+
+   if(selectedLanguage === "uz-cyr"){
+  loginCurrentLanguage.textContent = "Кирилча";
+
+  document.getElementById("loginTitle").textContent =
+    "Хуш келибсиз";
+
+  document.getElementById("loginDescription").textContent =
+    "Таклифномангизни бошқариш учун ҳисобингизга киринг.";
+
+  document.getElementById("loginLabel").textContent =
+    "Логин";
+
+  document.getElementById("login").placeholder =
+    "Логинингизни киритинг";
+
+  document.getElementById("passwordLabel").textContent =
+    "Парол";
+
+  document.getElementById("password").placeholder =
+    "Паролингизни киритинг";
+
+  document.getElementById("loginButton").textContent =
+    "Кириш";
+}
+
+if(selectedLanguage === "uz-lat"){
+  loginCurrentLanguage.textContent = "Lotincha";
+
+  document.getElementById("loginTitle").textContent =
+    "Xush kelibsiz";
+
+  document.getElementById("loginDescription").textContent =
+    "Taklifnomangizni boshqarish uchun hisobingizga kiring.";
+
+  document.getElementById("loginLabel").textContent =
+    "Login";
+
+  document.getElementById("login").placeholder =
+    "Loginingizni kiriting";
+
+  document.getElementById("passwordLabel").textContent =
+    "Parol";
+
+  document.getElementById("password").placeholder =
+    "Parolingizni kiriting";
+
+  document.getElementById("loginButton").textContent =
+    "Kirish";
+}
+  });
+});
+const languageOptions =
+  languageMenu.querySelectorAll("[data-lang]");
+
+languageOptions.forEach(function(option){
+
+  option.addEventListener(
+    "click",
+    function(){
+
+      const selectedLanguage =
+        option.getAttribute("data-lang");
+
+      if(selectedLanguage === "uz-cyr"){
+        document.querySelector(".invitations-heading h1").textContent =
+          "Таклифномаларим";
+
+        document.querySelector(".invitations-heading p").textContent =
+          "Таклифномангизни танланг, ўзгартиринг, сақланг ва кўринг.";
+
+        document.querySelector(".user-info span").textContent =
+           showFirstName("Сардор Собиров");
+
+          document.getElementById("currentLanguage").textContent = "Кирилча";
+
+          document.querySelector(".logout-button span").textContent =
+  "Аккаунтдан чиқиш";
+
+document.querySelectorAll(".invitation-date").forEach(function(item){
+  item.textContent = item.textContent.replace(
+    "Amal qilish muddati:",
+    "Амал қилиш муддати:"
+  );
+});
+
+document.querySelectorAll(".secondary-action span").forEach(function(item){
+  item.textContent = "Кўриш";
+});
+
+document.querySelectorAll(".primary-action span").forEach(function(item){
+  item.textContent = "Ўзгартириш";
+});
+      }
+
+      
+
+      if(selectedLanguage === "uz-lat"){
+        document.querySelector(".invitations-heading h1").textContent =
+          "Taklifnomalarim";
+
+        document.querySelector(".invitations-heading p").textContent =
+          "Taklifnomangizni tanlang, o‘zgartiring, saqlang va ko‘ring.";
+
+        document.querySelector(".user-info span").textContent =
+           showFirstName("Sardor Sobirov");
+
+          document.getElementById("currentLanguage").textContent = "Lotincha";
+
+          document.querySelector(".logout-button span").textContent =
+  "Akkauntdan chiqish";
+
+document.querySelectorAll(".invitation-date").forEach(function(item){
+  item.textContent = item.textContent.replace(
+    "Амал қилиш муддати:",
+    "Amal qilish muddati:"
+  );
+});
+
+document.querySelectorAll(".secondary-action span").forEach(function(item){
+  item.textContent = "Ko‘rish";
+});
+
+document.querySelectorAll(".primary-action span").forEach(function(item){
+  item.textContent = "O‘zgartirish";
+});
+      }
+
+        languageMenu.style.display = "none";
+      languageOverlay.style.display = "none";
+    }
+  );
+
+});
+
+
+
+
+languageButton.addEventListener(
+  "click",
+  function(){
+
+    languageMenu.style.display = "block";
+    languageOverlay.style.display = "block";
+
+  }
+);
+
+languageOverlay.addEventListener(
+  "click",
+  function(){
+
+    languageMenu.style.display = "none";
+    languageOverlay.style.display = "none";
+
+  }
+);
+const editInvitationButton =
+  document.getElementById("editInvitationButton");
+
+const invitationBackButton =
+  document.getElementById("invitationBackButton");
+
+const invitationHeading =
+  document.querySelector(".invitations-heading");
+
+const invitationGrid =
+  document.querySelector(".invitation-grid");
+
+const invitationEditor =
+  document.getElementById("invitationEditor");
+
+
+editInvitationButton.addEventListener(
+  "click",
+  function(){
+
+    invitationHeading.style.display = "none";
+    invitationGrid.style.display = "none";
+
+    invitationEditor.style.display = "block";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+);
+
+
+invitationBackButton.addEventListener(
+  "click",
+  function(){
+
+    if(player){
+  player.pauseVideo();
+  isPlaying = false;
+}
+    invitationEditor.style.display = "none";
+
+    invitationHeading.style.display = "block";
+    invitationGrid.style.display = "grid";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+);
+invitationEditor.addEventListener(
+  "click",
+  function(event){
+
+    if(event.target.closest("button")){
+
+      const active = document.activeElement;
+
+      if(active && active !== document.body && active.blur){
+        active.blur();
+      }
+
+    }
+
+  },
+  true
+);
+
+function formatDateInput(value){
+
+  const digits = value
+    .replace(/\\D/g, "")
+    .slice(0, 8);
+
+  let result = "";
+
+  if(digits.length <= 2){
+    result = digits;
+  }
+  else if(digits.length <= 4){
+    result =
+      digits.slice(0, 2) +
+      "." +
+      digits.slice(2);
+  }
+  else{
+    result =
+      digits.slice(0, 2) +
+      "." +
+      digits.slice(2, 4) +
+      "." +
+      digits.slice(4);
+  }
+
+  return result;
+}
+
+
+
+
+function formatTimeInput(value){
+
+   let digits = value.replace(/\\D/g, "").slice(0, 4);
+
+  if(digits.length > 2){
+    return (
+      digits.slice(0, 2) +
+      ":" +
+      digits.slice(2)
+    );
+  }
+
+  return digits;
+}
+
+
+
+
+const eventDateInput = document.getElementById("eventDate");
+const eventTimeInput = document.getElementById("eventTime");
+
+eventDateInput.addEventListener("input", function(){
+  this.value = formatDateInput(this.value);
+});
+
+eventTimeInput.addEventListener("input", function(){
+  this.value = formatTimeInput(this.value);
+});
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+logoutButton.addEventListener(
+  "click",
+  function(){
+
+    document.getElementById("invitationsPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+
+    loginInput.value = "";
+        loginButton.disabled = false;
+    loginButton.textContent =
+      loginCurrentLanguage.textContent === "Кирилча" ? "Кириш" : "Kirish";
+    passwordInput.value = "";
+
+  }
+);
+
+/* =========================
+   REMOVE ERROR ON INPUT
+========================= */
+
+loginInput.addEventListener(
+  "input",
+  function(){
+    error.style.display = "none";
+  }
+);
+
+passwordInput.addEventListener(
+  "input",
+  function(){
+    error.style.display = "none";
+  }
+);
+
+
+/* =========================
+   MUSIC PLAYER
+========================= */
+
+let player = null;
+let videoDuration = 0;
+let startTime = 0;
+let endTime = 0;
+let currentTime = 0;
+let dragging = null;
+let isPlaying = false;
+
+const urlInput = document.getElementById("youtubeUrl");
+const loadBtn = document.getElementById("loadBtn");
+const editor = document.getElementById("editor");
+
+const canvas = document.getElementById("waveform");
+const ctx = canvas.getContext("2d");
+
+const startHandle = document.getElementById("startHandle");
+const endHandle = document.getElementById("endHandle");
+const selection = document.getElementById("selection");
+const progress = document.getElementById("progress");
+
+const startLabel = document.getElementById("startTime");
+const currentLabel = document.getElementById("currentTime");
+const endLabel = document.getElementById("endTime");
+
+const guestNameInput = document.getElementById("guestName");
+const createGuestLink = document.getElementById("createGuestLink");
+const guestList = document.getElementById("guestList");
+
+function generateGuestCode(){
+
+  let code;
+
+  do{
+    code = Math.floor(1000 + Math.random() * 9000).toString();
+  }while(
+    document.querySelector(
+      '[data-guest-code="' + code + '"]'
+    )
+  );
+
+  return code;
+}
+
+createGuestLink.addEventListener("click", function(){
+
+  const guestName = guestNameInput.value.trim();
+
+  if(!guestName){
+    guestNameInput.focus();
+    return;
+  }
+
+  const guestCode = generateGuestCode();
+
+  const baseUrl = "https://zappy.uz/1005";
+  const guestUrl = baseUrl + "&" + guestCode;
+
+  const card = document.createElement("div");
+
+  card.className = "guest-card";
+  card.dataset.guestCode = guestCode;
+
+  card.innerHTML =
+    '<div class="guest-card-info">' +
+
+      '<div class="guest-card-name">' +
+        guestName +
+      '</div>' +
+
+      '<div class="guest-card-link">' +
+        guestUrl +
+      '</div>' +
+
+    '</div>' +
+
+    '<div class="guest-card-actions">' +
+
+      '<button type="button" class="guest-send">' +
+        'Yuborish' +
+      '</button>' +
+
+      '<button type="button" class="guest-copy">' +
+        'Nusxalash' +
+      '</button>' +
+
+     '<button type="button" class="guest-delete">' +
+        'O‘chirish' +
+      '</button>' +
+
+    '</div>';
+
+  guestList.prepend(card);
+
+  card.classList.add("guest-card-new");
+
+  setTimeout(function(){
+    card.classList.remove("guest-card-new");
+  }, 3600);
+
+  card.querySelector(".guest-send").addEventListener(
+  "click",
+  function(){
+
+    const link =
+      card.querySelector(".guest-card-link").textContent;
+
+    const text =
+           "Siz uchun maxsus taklifnoma havolasi:\\n" + link;
+
+    if(navigator.share){
+      navigator.share({
+        title: "Taklifnoma",
+        text: text,
+        url: link
+      });
+    }else{
+      window.location.href =
+        "https://wa.me/?text=" +
+        encodeURIComponent(text);
+    }
+
+  }
+);
+
+  card.querySelector(".guest-copy").addEventListener(
+  "click",
+  function(){
+
+    const link =
+      card.querySelector(".guest-card-link").textContent;
+
+    navigator.clipboard.writeText(link);
+
+    this.textContent = "Nusxalandi";
+
+    setTimeout(() => {
+      this.textContent = "Nusxalash";
+    }, 1500);
+
+  }
+);
+
+card.querySelector(".guest-delete").addEventListener(
+  "click",
+  function(){
+
+    card.remove();
+
+  }
+);
+
+   guestNameInput.value = "";
+
+});
+
+const saveBtn = document.getElementById("saveBtn");
+
+
+function getVideoId(url){
+
+  try{
+
+    const parsed = new URL(url);
+
+    if(parsed.hostname.includes("youtube.com")){
+      return parsed.searchParams.get("v");
+    }
+
+    if(parsed.hostname.includes("youtu.be")){
+      return parsed.pathname.substring(1);
+    }
+
+    if(parsed.pathname.startsWith("/shorts/")){
+      return parsed.pathname.split("/")[2];
+    }
+
+  }catch(e){}
+
+  return null;
+}
+
+
+function onYouTubeIframeAPIReady(){
+  console.log("YouTube API ready");
+}
+
+
+loadBtn.addEventListener("click", function(){
+
+  const url = urlInput.value.trim();
+  const videoId = getVideoId(url);
+
+  if(!videoId){
+    alert("YouTube havolasi noto‘g‘ri.");
+    return;
+  }
+
+  editor.style.display = "block";
+
+  if(player){
+    player.destroy();
+  }
+
+  player = new YT.Player(
+    "youtube-player",
+    {
+      videoId:videoId,
+
+      playerVars:{
+        controls:0,
+        autoplay:0,
+        playsinline:1,
+        rel:0
+      },
+
+      events:{
+
+        onReady:function(event){
+
+          videoDuration =
+            event.target.getDuration();
+
+          startTime = 0;
+          endTime = videoDuration;
+
+          drawWaveform();
+          updateUI();
+
+        },
+
+        onStateChange:function(event){
+
+          if(
+            event.data ===
+            YT.PlayerState.PLAYING
+          ){
+            isPlaying = true;
+          }
+
+          if(
+            event.data ===
+            YT.PlayerState.PAUSED
+          ){
+            isPlaying = false;
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+});
+
+
+function drawWaveform(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+  canvas.width =
+    rect.width * dpr;
+
+  canvas.height =
+    rect.height * dpr;
+
+  ctx.scale(dpr,dpr);
+
+  const width = rect.width;
+  const height = rect.height;
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+  const bars =
+    Math.floor(width / 4);
+
+  const center =
+    height / 2;
+
+  for(let i = 0; i < bars; i++){
+
+    const x = i * 4;
+
+    const noise =
+      Math.random();
+
+    const amplitude =
+      10 + noise * 45;
+
+    const barHeight =
+      amplitude *
+      (0.5 + Math.random());
+
+    ctx.fillStyle =
+      "#718077";
+
+    ctx.fillRect(
+      x,
+      center - barHeight / 2,
+      2,
+      barHeight
+    );
+
+  }
+
+}
+
+
+function formatTime(seconds){
+
+  seconds =
+    Math.max(
+      0,
+      Math.floor(seconds)
+    );
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const secondsPart =
+    seconds % 60;
+
+  return(
+    String(minutes).padStart(2,"0")
+    +
+    ":"
+    +
+    String(secondsPart).padStart(2,"0")
+  );
+
+}
+
+
+function updateUI(){
+
+  if(!videoDuration)
+    return;
+
+  const startPercent =
+    (startTime / videoDuration) * 100;
+
+  const endPercent =
+    (endTime / videoDuration) * 100;
+
+  startHandle.style.left =
+    startPercent + "%";
+
+  endHandle.style.left =
+    endPercent + "%";
+
+  endHandle.style.right =
+    "auto";
+
+  selection.style.left =
+    startPercent + "%";
+
+  selection.style.width =
+    (endPercent - startPercent) + "%";
+
+  startLabel.innerText =
+    formatTime(startTime);
+
+  currentLabel.innerText =
+    formatTime(currentTime);
+
+  endLabel.innerText =
+    formatTime(endTime);
+
+  if(currentTime >= 0){
+
+    progress.style.display =
+      "block";
+
+    progress.style.left =
+      (
+        currentTime /
+        videoDuration *
+        100
+      ) + "%";
+
+  }
+
+}
+
+
+function positionToTime(clientX){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  let percent =
+    (clientX - rect.left) /
+    rect.width;
+
+  percent =
+    Math.max(
+      0,
+      Math.min(1,percent)
+    );
+
+  return percent * videoDuration;
+
+}
+
+
+startHandle.addEventListener(
+  "pointerdown",
+  function(event){
+
+    dragging = "start";
+
+    startHandle.setPointerCapture(
+      event.pointerId
+    );
+
+    event.preventDefault();
+
+  }
+);
+
+
+endHandle.addEventListener(
+  "pointerdown",
+  function(event){
+
+    dragging = "end";
+
+    endHandle.setPointerCapture(
+      event.pointerId
+    );
+
+    event.preventDefault();
+
+  }
+);
+
+
+window.addEventListener(
+  "pointermove",
+  function(event){
+
+    if(
+      !dragging ||
+      !videoDuration
+    )
+      return;
+
+    const time =
+      positionToTime(
+        event.clientX
+      );
+
+
+    if(dragging === "start"){
+
+      startTime =
+        Math.min(
+          time,
+          endTime - 0.5
+        );
+
+      if(player){
+
+        player.seekTo(
+          startTime,
+          true
+        );
+
+        player.playVideo();
+
+        isPlaying = true;
+
+      }
+
+    }
+
+
+    if(dragging === "end"){
+
+      endTime =
+        Math.max(
+          time,
+          startTime + 0.5
+        );
+
+      if(player){
+
+        const previewTime =
+          Math.min(
+            endTime - 0.1,
+            startTime
+          );
+
+        player.seekTo(
+          previewTime,
+          true
+        );
+
+        player.playVideo();
+
+        isPlaying = true;
+
+      }
+
+    }
+
+    updateUI();
+
+  }
+);
+
+
+function stopDragging(){
+  dragging = null;
+}
+
+window.addEventListener("pointerup", stopDragging);
+window.addEventListener("pointercancel", stopDragging);
+
+
+canvas.addEventListener(
+  "click",
+  function(event){
+
+    if(!videoDuration)
+      return;
+
+    const time =
+      positionToTime(
+        event.clientX
+      );
+
+    if(
+      time >= startTime &&
+      time <= endTime
+    ){
+
+      if(player){
+
+        player.seekTo(
+          time,
+          true
+        );
+
+        player.playVideo();
+
+        isPlaying = true;
+
+      }
+
+    }
+
+  }
+);
+
+
+
+setInterval(
+  function(){
+
+    if(!player)
+      return;
+
+    try{
+
+      currentTime =
+        player.getCurrentTime();
+
+    }catch(e){
+
+      return;
+
+    }
+
+
+    if(
+      isPlaying &&
+      currentTime >= endTime
+    ){
+
+      player.pauseVideo();
+
+      player.seekTo(
+        startTime,
+        true
+      );
+
+      currentTime =
+        startTime;
+
+      isPlaying = false;
+
+    }
+
+    updateUI();
+
+  },
+  100
+);
+
+
+saveBtn.addEventListener("click", function(){
+  const url = urlInput.value.trim();
+  const videoId = getVideoId(url);
+
+  if(!videoId) return;
+
+  const data = {
+    videoId,
+    url,
+    start: startTime,
+    end: endTime
+  };
+
+  localStorage.setItem(
+    "youtubeClip",
+    JSON.stringify(data)
+  );
+
+  if(player){
+    player.pauseVideo();
+    isPlaying = false;
+  }
+
+  alert("Saqlandi.");
+});
+
+window.addEventListener(
+  "load",
+  function(){
+
+    const saved =
+      localStorage.getItem(
+        "youtubeClip"
+      );
+
+    if(!saved)
+      return;
+
+    try{
+
+      const data =
+        JSON.parse(saved);
+
+      urlInput.value =
+        data.url ||
+        (
+          "https://www.youtube.com/watch?v="
+          +
+          data.videoId
+        );
+
+    }catch(e){}
+
+  }
+);
+
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    if(videoDuration){
+
+      drawWaveform();
+      updateUI();
+
+    }
+
+  }
+);
+
+</script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+</body>
+</html>`, {
+      headers: {
+        "content-type": "text/html; charset=UTF-8"
+      }
+    });
+  }
+};
