@@ -1,0 +1,4162 @@
+export default {
+  async fetch(request) {
+    return new Response(`<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAPPY.UZ — Master Admin</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --green:#0B3D21;
+  --green-soft:#0F5A3A;
+  --cream:#F8E8D1;
+  --bg:#F5F0E3;
+  --white:#FFFCF7;
+  --text:#0B301B;
+  --muted:#718077;
+  --border:#E3DCCF;
+}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.login-wrapper{
+  width:100%;
+  max-width:430px;
+}
+
+.brand{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.brand-name{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-1.5px;
+  color:var(--green);
+}
+
+.brand-subtitle{
+  margin-top:6px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.login-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:34px;
+  box-shadow:0 20px 50px rgba(11,48,27,.08);
+}
+
+.title{
+  font-size:23px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  margin-bottom:7px;
+}
+
+.description{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:27px;
+}
+
+.field{
+  margin-bottom:17px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.field input{
+  width:100%;
+  height:50px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  color:var(--text);
+  padding:0 14px;
+  font-size:15px;
+  outline:none;
+  transition:.2s;
+}
+
+.field input:hover{
+  border-color:#CFC6B6;
+}
+
+.field input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(11,61,33,.08);
+}
+
+.password-wrapper{
+  position:relative;
+}
+
+.password-wrapper input{
+  padding-right:48px;
+}
+
+.password-toggle{
+  position:absolute;
+  right:13px;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:14px;
+}
+
+.login-button{
+  width:100%;
+  height:50px;
+  margin-top:7px;
+  border:0;
+  border-radius:10px;
+  background:var(--green);
+  color:var(--cream);
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.login-button:hover{
+  background:var(--green-soft);
+}
+
+.login-button:active{
+  transform:scale(.99);
+}
+
+.error{
+  display:none;
+  margin-top:14px;
+  padding:11px 13px;
+  border-radius:9px;
+  background:#FFF0EE;
+  border:1px solid #F1D4CF;
+  color:#A53B31;
+  font-size:13px;
+}
+
+.footer{
+  text-align:center;
+  margin-top:22px;
+  font-size:12px;
+  color:#92998F;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+#dashboardPage{
+  display:none;
+  min-height:100vh;
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+.sidebar{
+  width:235px;
+  height:100vh;
+  position:fixed;
+  left:0;
+  top:0;
+  background:var(--white);
+  border-right:1px solid var(--border);
+  padding:25px 16px;
+  display:flex;
+  flex-direction:column;
+  z-index:100;
+   transition:transform .35s ease, opacity .35s ease;
+}
+
+.logo{
+  padding:0 12px;
+  margin-bottom:38px;
+}
+
+.logo-title{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-1.3px;
+  color:var(--green);
+}
+
+.logo-subtitle{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.nav-item{
+  width:100%;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:11px;
+  padding:0 12px;
+  border-radius:10px;
+  color:var(--text);
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.nav-item:hover{
+  background:#F4EFE5;
+  color:var(--text);
+}
+
+.nav-item.active{
+  background:var(--green);
+  color:var(--cream);
+}
+.nav-item{
+  justify-content:space-between;
+}
+
+.client-select-checkbox,
+#selectAllCheckbox,
+.template-select-checkbox,
+#selectAllTemplatesCheckbox{
+  appearance:none;
+  -webkit-appearance:none;
+  width:17px;
+  height:17px;
+  border:1.5px solid var(--border);
+  border-radius:5px;
+  background:#fff;
+  cursor:pointer;
+  position:relative;
+  transition:.15s;
+}
+.client-select-checkbox:hover,
+#selectAllCheckbox:hover,
+.template-select-checkbox:hover,
+#selectAllTemplatesCheckbox:hover{
+  border-color:var(--green);
+}
+
+.client-select-checkbox:checked,
+#selectAllCheckbox:checked,
+.template-select-checkbox:checked,
+#selectAllTemplatesCheckbox:checked{
+  background:#fff;
+  border-color:var(--green);
+}
+.client-select-checkbox:checked::after,
+#selectAllCheckbox:checked::after,
+.template-select-checkbox:checked::after,
+#selectAllTemplatesCheckbox:checked::after{
+  content:"";
+  position:absolute;
+  left:6.7px;
+  top:2.5px;
+  width:3px;
+  height:7px;
+  border:solid var(--green);
+  border-width:0 1.5px 1.5px 0;
+  transform:rotate(45deg);
+}
+
+.nav-count{
+  font-size:11px;
+  font-weight:700;
+  background:#EEE7DA;
+  color:var(--muted);
+  padding:2px 8px;
+  border-radius:20px;
+}
+
+.nav-item.active .nav-count{
+  background:rgba(255,255,255,.2);
+  color:var(--cream);
+}
+.nav-icon{
+  width:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+}
+
+.sidebar-bottom{
+  margin-top:auto;
+}
+.logout{
+  color:#fff;
+  background:#A53B31;
+}
+
+.logout:hover{
+  background:#8A2F27;
+  color:#fff;
+}
+
+.main{
+  margin-left:235px;
+  flex:1;
+  min-width:0;
+  padding:28px 34px 40px;
+   transition:margin .35s ease, max-width .35s ease;
+}
+  
+.sidebar.collapsed{
+  transform:translateX(-100%);
+  opacity:0;
+  pointer-events:none;
+}
+
+.main.expanded{
+  max-width:95%;
+  margin-left:auto;
+  margin-right:auto;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
+
+.page-title{
+  font-size:27px;
+  font-weight:750;
+  letter-spacing:-.8px;
+}
+
+.page-subtitle{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.admin-profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--green);
+  color:var(--cream);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:700;
+}
+
+.profile-text{
+  font-size:13px;
+  font-weight:600;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.stat-card{
+  position:relative;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  cursor:pointer;
+  transition:.2s;
+  overflow:hidden;
+}
+
+.stat-card:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 24px rgba(11,48,27,.06);
+}
+
+.stat-card.active-card{
+  box-shadow:0 0 0 2px var(--green);
+}
+
+.stat-card.total{
+  border-top:4px solid var(--green);
+}
+
+.stat-card.active-status{
+  border-top:4px solid #4B8A62;
+}
+
+.stat-card.expired{
+  border-top:4px solid #C48A42;
+}
+
+.stat-card.blocked{
+  border-top:4px solid #A53B31;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.stat-number{
+  font-size:29px;
+  font-weight:750;
+  letter-spacing:-1px;
+  color:var(--text);
+}
+
+.stat-note{
+  margin-top:7px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+
+/* =========================
+   CLIENT LIST
+========================= */
+
+.client-list-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.client-list-header{
+  min-height:72px;
+  padding:0 21px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:1px solid var(--border);
+}
+
+.client-list-title{
+  font-size:16px;
+  font-weight:700;
+}
+
+.client-count{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.client-search{
+  width:280px;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:#fff;
+  color:var(--text);
+  padding:0 13px;
+  font-size:13px;
+  outline:none;
+  transition:.2s;
+}
+
+.client-search::placeholder{
+  color:#9AA19A;
+}
+
+.client-search:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(11,61,33,.07);
+}
+
+.client-table-head{
+  display:grid;
+  grid-template-columns:36px 1.2fr .9fr .9fr 1.1fr 1fr 1.5fr 150px;
+  gap:20px;
+  align-items:center;
+  min-height:46px;
+  padding:0 21px;
+  background:#FBF8F2;
+  border-bottom:1px solid var(--border);
+}
+
+.client-table-head div{
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+
+.client-row{
+  display:grid;
+grid-template-columns:36px 1.2fr .9fr .9fr 1.1fr 1fr 1.5fr 150px;
+  gap:20px;
+  align-items:center;
+  min-height:76px;
+  padding:10px 21px;
+  border-bottom:1px solid #EEE8DD;
+  transition:.15s;
+}
+
+.client-row:last-child{
+  border-bottom:0;
+}
+
+.client-row:hover{
+  background:#FCFAF5;
+}
+  
+.client-row.active{
+  background:#DCEFE1;
+}
+
+.client-row.expired{
+  background:#FBE7C6;
+}
+
+.client-row.blocked{
+  background:#F4CFC9;
+}
+
+.client-row.active:hover{
+  background:#CBE6D3;
+}
+
+.client-row.expired:hover{
+  background:#F9DBA6;
+}
+
+.client-row.blocked:hover{
+  background:#EFBDB5;
+}
+  
+.client-name{
+  font-size:14px;
+  font-weight:650;
+  color:var(--text);
+}
+
+.client-contact{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.client-status{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.profile-status{
+  width:max-content;
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:600;
+}
+
+.profile-status.active{
+  background:#EAF3EC;
+  color:#28613D;
+}
+
+.profile-status.expired{
+  background:#FFF2DE;
+  color:#9A681F;
+}
+
+.profile-status.blocked{
+  background:#F6E9E7;
+  color:#A53B31;
+}
+
+.client-expiry{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.client-invitation{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+
+.invitation-link{
+  color:var(--green-soft);
+  text-decoration:none;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.invitation-link:hover{
+  text-decoration:underline;
+}
+
+.copy-link{
+  width:max-content;
+  height:28px;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:#fff;
+  color:var(--text);
+  font-size:11px;
+  cursor:pointer;
+}
+
+.copy-link:hover{
+  background:#F5F0E3;
+}
+
+.client-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+}
+
+.client-action{
+  height:32px;
+  padding:0 9px;
+  border-radius:7px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.client-action:hover{
+  background:#F5F0E3;
+}
+
+.client-action.update{
+  color:#1F5A8A;
+  border-color:#B9D3E7;
+  background:#EAF2FA;
+}
+
+.client-action.block{
+  color:#8A641F;
+  border-color:#E7D5B2;
+  background:#FDF4E4;
+}
+
+.client-action.delete{
+  color:#A53B31;
+  border-color:#E8C8C3;
+  background:#FBEBE9;
+}
+
+.empty-list{
+  padding:50px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+  /* UPDATE MODAL */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(11,48,27,.35);
+  backdrop-filter:blur(4px);
+}
+
+.update-modal{
+  width:100%;
+    max-width:560px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 25px 70px rgba(11,48,27,.18);
+  overflow:hidden;
+}
+
+.update-modal-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  padding:22px 24px;
+  border-bottom:1px solid var(--border);
+}
+
+.update-modal-title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.update-modal-subtitle{
+  margin-top:5px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.modal-close{
+  width:32px;
+  height:32px;
+  border:0;
+  border-radius:8px;
+  background:#F5F0E3;
+  color:var(--muted);
+  font-size:22px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.modal-close:hover{
+  background:#EEE7DA;
+  color:var(--text);
+}
+
+.update-modal-body{
+  padding:22px 24px 8px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 14px;
+}
+
+.update-modal-body .field{
+  margin-bottom:16px;
+}
+
+.update-modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  padding:16px 24px 22px;
+}
+
+.modal-cancel,
+.modal-save{
+  height:40px;
+  padding:0 16px;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.modal-cancel{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+}
+
+.modal-save{
+  border:0;
+  background:var(--green);
+  color:var(--cream);
+}
+
+.modal-save:hover{
+  background:var(--green-soft);
+}
+
+/* =========================
+   INVITATIONS LIST
+========================= */
+
+.invitation-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #EEE8DD;
+}
+
+.invitation-row:last-child{
+  border-bottom:0;
+}
+
+.invitation-row a{
+  color:var(--green-soft);
+  text-decoration:none;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  flex:1;
+  min-width:0;
+}
+
+.invitation-row-actions{
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toastContainer{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:99999;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:flex-end;
+}
+
+.toast{
+  min-width:260px;
+  max-width:340px;
+  padding:14px 18px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:650;
+  box-shadow:0 15px 40px rgba(11,48,27,.18);
+  transform:translateX(140%);
+  opacity:0;
+  transition:transform .4s ease, opacity .4s ease;
+}
+
+.toast.show{
+  transform:translateX(0);
+  opacity:1;
+}
+
+.toast.success{
+  background:#DCEFE1;
+  color:#1F5A3A;
+  border:1px solid #B8DEC3;
+}
+
+.toast.warning{
+  background:#FBE7C6;
+  color:#7A5310;
+  border:1px solid #F0CE95;
+}
+
+.toast.danger{
+  background:#A53B31;
+  color:#fff;
+  border:1px solid #8A2F27;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+  .client-table-head,
+  .client-row{
+    grid-template-columns:1.2fr 1fr 1fr 1.3fr 130px;
+    gap:12px;
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+}
+
+@media(max-width:1000px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:900px){
+
+  .client-list-header{
+    align-items:flex-start;
+    flex-direction:column;
+    padding:18px;
+  }
+
+  .client-search{
+    width:100%;
+  }
+
+  .client-table-head{
+    display:none;
+  }
+
+  .client-row{
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    padding:17px;
+  }
+
+  .client-actions{
+    justify-content:flex-start;
+  }
+
+}
+
+@media(max-width:700px){
+
+  .sidebar{
+    width:72px;
+    padding:22px 10px;
+  }
+
+  .logo{
+    padding:0;
+    text-align:center;
+  }
+
+  .logo-title{
+    font-size:18px;
+  }
+
+  .logo-subtitle,
+  .nav-text{
+    display:none;
+  }
+
+  .nav-item{
+    justify-content:center;
+    padding:0;
+  }
+
+  .main{
+    padding:22px 18px 30px;
+  }
+
+  .page-title{
+    font-size:23px;
+  }
+
+}
+
+@media(max-width:520px){
+
+  #loginPage{
+    padding:18px;
+  }
+
+  .login-card{
+    padding:26px 22px;
+    border-radius:15px;
+  }
+
+  .brand-name{
+    font-size:27px;
+  }
+
+  .title{
+    font-size:21px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .stat-card{
+    padding:16px;
+  }
+
+  .stat-number{
+    font-size:24px;
+  }
+
+  .admin-profile .profile-text{
+    display:none;
+  }
+
+  .client-row{
+    grid-template-columns:1fr;
+    gap:9px;
+    padding-left:16px;
+    padding-right:10px;
+  }
+
+  .client-actions{
+    justify-content:flex-start;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     LOGIN PAGE
+========================= -->
+
+<section id="loginPage">
+
+  <main class="login-wrapper">
+
+    <div class="login-card">
+
+      <div class="title">
+        Xush kelibsiz
+      </div>
+
+      <div class="description">
+        Tizimni boshqarish uchun hisobingizga kiring.
+      </div>
+
+      <form id="loginForm">
+
+        <div class="field">
+
+          <label for="login">
+            Login
+          </label>
+
+          <input
+            type="text"
+            id="login"
+            autocomplete="off"
+            placeholder="Loginni kiriting"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="password">
+            Parol
+          </label>
+
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="password"
+              autocomplete="off"
+              placeholder="Parolni kiriting"
+            >
+
+                      <button
+              type="button"
+              class="password-toggle"
+              id="togglePassword"
+            >
+              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="login-button"
+        >
+          Kirish
+        </button>
+
+        <div
+          class="error"
+          id="error"
+        >
+          Login yoki parol noto‘g‘ri.
+        </div>
+
+      </form>
+
+    </div>
+
+
+  </main>
+
+</section>
+
+
+<!-- =========================
+     DASHBOARD PAGE
+========================= -->
+
+<section id="dashboardPage">
+
+    <button type="button" id="sidebarOpenBtn" style="display:none; position:fixed; top:18px; left:18px; z-index:200; width:32px; height:32px; border:1px solid var(--border); border-radius:8px; background:var(--white); color:var(--text); cursor:pointer; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(11,48,27,.08);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><path d="M17 10l2 2-2 2"/></svg>
+    </button>
+
+  <div class="app">
+
+    <aside class="sidebar">
+
+            <div class="logo" style="display:flex; align-items:flex-start; justify-content:space-between;">
+
+        <div>
+          <div class="logo-title">
+            ZAPPY.UZ
+          </div>
+
+          <div class="logo-subtitle">
+            Master Admin
+          </div>
+        </div>
+
+             <button type="button" id="sidebarToggle" style="border:0; background:transparent; cursor:pointer; color:var(--muted); padding:6px; margin:-19px -24px 0 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><path d="M15 10l-2 2 2 2"/></svg>
+        </button>
+
+      </div>
+
+
+         <nav class="nav">
+
+                  <div class="nav-item nav-filter active" data-filter="all">
+          <span class="nav-left">
+            <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></span>
+            <span class="nav-text">Jami mijozlar</span>
+          </span>
+          <span class="nav-count" id="navCountAll">0</span>
+        </div>
+
+        <div class="nav-item nav-filter" data-filter="active">
+          <span class="nav-left">
+            <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+            <span class="nav-text">Faol mijozlar</span>
+          </span>
+          <span class="nav-count" id="navCountActive">0</span>
+        </div>
+
+        <div class="nav-item nav-filter" data-filter="expired">
+          <span class="nav-left">
+            <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span>
+            <span class="nav-text">Muddati tugagan</span>
+          </span>
+          <span class="nav-count" id="navCountExpired">0</span>
+        </div>
+
+        <div class="nav-item nav-filter" data-filter="blocked">
+          <span class="nav-left">
+            <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="5.5" y1="5.5" x2="18.5" y2="18.5"/></svg></span>
+            <span class="nav-text">Bloklangan</span>
+          </span>
+          <span class="nav-count" id="navCountBlocked">0</span>
+        </div>
+
+      <div class="nav-item" id="newClientButton" style="justify-content:flex-start">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        <span class="nav-text">Yangi mijoz</span>
+    </div>
+
+    <div class="nav-item" id="templatesButton" style="justify-content:space-between">
+  <span class="nav-left">
+    <span class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </span>
+    <span class="nav-text">Templates</span>
+  </span>
+  <span class="nav-count" id="navCountTemplates">0</span>
+</div>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+              <div
+          class="nav-item logout"
+          id="logoutButton"
+          style="justify-content:flex-start"
+        >
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-4"/><polyline points="8 17 3 12 8 7"/><line x1="3" y1="12" x2="15" y2="12"/></svg></span>
+          <span class="nav-text">Chiqish</span>
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <div>
+
+          <h1 class="page-title">
+            Dashboard
+          </h1>
+
+          <p class="page-subtitle">
+            Zappy tizimining umumiy holati
+          </p>
+
+        </div>
+
+
+        <div class="admin-profile">
+
+          <div class="avatar">
+            SA
+          </div>
+
+          <div class="profile-text">
+            Master Admin
+          </div>
+
+        </div>
+
+      </header>
+
+
+     
+
+
+      <!-- =========================
+           CLIENT LIST
+      ========================= -->
+
+      <section class="client-list-card">
+
+        <div class="client-list-header">
+
+          <div>
+
+            <div
+              class="client-list-title"
+              id="listTitle"
+            >
+              Jami mijozlar
+            </div>
+
+            <div
+              class="client-count"
+              id="listCount"
+            >
+              24 ta mijoz
+            </div>
+
+          </div>
+
+
+                 <div style="display:flex; gap:10px;">
+
+            <input
+              type="text"
+              class="client-search"
+              id="clientSearch"
+              placeholder="Mijozni qidirish..."
+              autocomplete="off"
+            >
+
+            <select class="client-search" id="clientSort" style="width:170px; cursor:pointer;">
+              <option value="default">Saralash</option>
+              <option value="az">Ism (A-Z)</option>
+              <option value="za">Ism (Z-A)</option>
+            <option value="newest">Yangi qo'shilgan</option>
+              <option value="oldest">Eski qo'shilgan</option>
+              <option value="expiry_asc" id="sortExpiryAsc">Muddat (yaqin)</option>
+  <option value="expiry_desc" id="sortExpiryDesc">Muddat (uzoq)</option>
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div id="clientTableHead" class="client-table-head" style="grid-template-columns:36px 1.2fr .9fr .9fr 1.1fr 1fr 1.5fr 150px;">
+
+  <div>
+    <input type="checkbox" id="selectAllCheckbox" style="width:16px; height:16px; cursor:pointer;">
+  </div>
+
+  <div>
+    Ismi
+  </div>
+
+  <div>
+    Login
+  </div>
+
+  <div>
+    Parol
+  </div>
+
+  <div>
+    Aloqa
+  </div>
+
+ <div>
+    Status
+  </div>
+
+   <div>
+    Taklifnomalar
+  </div>
+
+  <div>
+    Amallar
+  </div>
+
+</div>
+
+
+        <div id="clientList"></div>
+
+        <div id="updateModal" class="modal-overlay">
+
+  <div class="update-modal">
+
+    <div class="update-modal-header">
+      <div>
+       <div class="update-modal-title" id="updateModalTitle">Mijozni yangilash</div>
+        <div class="update-modal-subtitle">Mijoz ma'lumotlarini o'zgartiring</div>
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        id="updateModalClose"
+      >
+        ×
+      </button>
+    </div>
+          <div class="update-modal-body">
+        <div class="field" id="nameFieldBlock">
+        <label for="updateName">Ismi</label>
+        <input
+          type="text"
+          id="updateName"
+          placeholder="Mijoz ismi"
+        >
+      </div>
+      
+      <div class="field" id="expiryFieldBlock">
+         <label for="updateExpiry">Muddat tugash sanasi</label>
+        <input
+      type="date"
+       id="updateExpiry"
+        >
+      </div>
+
+      <div class="field">
+        <label for="updateLogin">Login</label>
+        <input
+          type="text"
+          id="updateLogin"
+          placeholder="Login"
+        >
+      </div>
+
+      <div class="field">
+        <label for="updatePassword">Parol</label>
+        <input
+          type="text"
+          id="updatePassword"
+          placeholder="Parol"
+        >
+      </div>
+
+     
+      
+                                                             <div class="field" id="invitationNameFieldBlock">
+        <label for="updateInvitationName">Taklifnoma nomi</label>
+        <input
+          type="text"
+          id="updateInvitationName"
+          placeholder="Masalan: Asosiy"
+        >
+      </div>
+
+      <div class="field" id="updateTemplateFieldBlock">
+        <label for="updateTemplate">Templates</label>
+        <select id="updateTemplate" style="width:100%; height:50px; border:1px solid var(--border); border-radius:10px; background:#fff; color:var(--text); padding:0 14px; font-size:15px; outline:none;">
+        </select>
+      </div>
+
+         <div class="field" id="invitationFieldBlock" style="grid-column:1 / -1;">
+        <label for="updateInvitation">Taklifnoma havolasi</label>
+        <input
+          type="text"
+          id="updateInvitation"
+          placeholder="https://zappy.uz/..."
+        >
+      </div>
+      
+
+     <div class="field" style="grid-column:1 / -1">
+        <label for="updateContact">Aloqa</label>
+        <input
+          type="text"
+          id="updateContact"
+          placeholder="+998 ..."
+        >
+      </div>
+
+
+    
+    </div>
+
+    <div class="update-modal-footer">
+
+      <button
+        type="button"
+        class="modal-cancel"
+        id="updateModalCancel"
+      >
+        Bekor qilish
+      </button>
+
+      <button
+        type="button"
+        class="modal-save"
+        id="updateModalSave"
+      >
+        Qo‘shish
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+      </section>
+
+    </main>
+
+  </div>
+
+</section>
+
+<div id="invitationsModal" class="modal-overlay">
+  <div class="update-modal" style="max-width:620px;">
+    <div class="update-modal-header">
+      <div>
+        <div class="update-modal-title" id="invitationsModalTitle">Taklifnomalar</div>
+        <div class="update-modal-subtitle">Mijozning barcha havolalari</div>
+      </div>
+      <button type="button" class="modal-close" id="invitationsModalClose">×</button>
+    </div>
+    <div class="update-modal-body" style="display:block; padding:18px 24px 20px; max-height:70vh; overflow-y:auto;">
+      <div id="invitationsList"></div>
+
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:8px;">Yangi taklifnoma qo'shish</label>
+               <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <input type="text" id="invModalNewName" placeholder="Nomi" style="flex:1; min-width:100px; height:44px; border:1px solid var(--border); border-radius:9px; padding:0 12px; font-size:14px;">
+          <select id="invModalNewTemplate" style="flex:1; min-width:120px; height:44px; border:1px solid var(--border); border-radius:9px; padding:0 12px; font-size:14px; cursor:pointer;">
+          </select>
+          <input type="text" id="invModalNewLink" placeholder="https://zappy.uz/..." style="flex:2; min-width:150px; height:44px; border:1px solid var(--border); border-radius:9px; padding:0 12px; font-size:14px;">
+          <input type="date" id="invModalNewExpiry" style="flex:1; min-width:130px; height:44px; border:1px solid var(--border); border-radius:9px; padding:0 12px; font-size:14px;">
+          <button type="button" class="client-action update" id="invModalAddBtn" style="height:44px; padding:0 16px;">Qo'shish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="editInvitationModal" class="modal-overlay">
+  <div class="update-modal" style="max-width:420px;">
+    <div class="update-modal-header">
+      <div>
+        <div class="update-modal-title">Taklifnomani tahrirlash</div>
+        <div class="update-modal-subtitle">Havola ma'lumotlarini o'zgartiring</div>
+      </div>
+      <button type="button" class="modal-close" id="editInvitationModalClose">×</button>
+    </div>
+    <div style="padding:22px 24px 8px;">
+
+      <div class="field">
+        <label for="editInvName">Nomi</label>
+        <input type="text" id="editInvName" placeholder="Masalan: Asosiy">
+      </div>
+
+      <div class="field">
+        <label for="editInvLink">Havolasi</label>
+        <input type="text" id="editInvLink" placeholder="https://zappy.uz/...">
+      </div>
+
+      <div class="field">
+        <label for="editInvExpiry">Muddat tugash sanasi</label>
+        <input type="date" id="editInvExpiry">
+      </div>
+
+    </div>
+    <div class="update-modal-footer">
+      <button type="button" class="modal-cancel" id="editInvitationModalCancel">Bekor qilish</button>
+      <button type="button" class="modal-save" id="editInvitationModalSave">Saqlash</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="templateAddModal" class="modal-overlay">
+
+  <div class="update-modal" style="max-width:460px;">
+
+       <div class="update-modal-header">
+      <div>
+        <div class="update-modal-title" id="templateAddModalTitle">
+          Template qo‘shish
+        </div>
+
+        <div class="update-modal-subtitle" id="templateAddModalSubtitle">
+          Yangi template ma’lumotlarini kiriting
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        id="templateAddModalClose"
+      >
+        ×
+      </button>
+    </div>
+
+    <div
+      class="update-modal-body"
+      style="display:block;"
+    >
+
+      <div class="field">
+        <label for="templateName">
+          Templates nomi
+        </label>
+
+        <input
+          type="text"
+          id="templateName"
+          placeholder="Masalan: Classic"
+        >
+      </div>
+
+      <div class="field">
+        <label for="templateLink">
+          Havolasi
+        </label>
+
+        <input
+          type="text"
+          id="templateLink"
+          placeholder="https://zappy.uz/..."
+        >
+      </div>
+
+    </div>
+
+    <div class="update-modal-footer">
+
+      <button
+        type="button"
+        class="modal-cancel"
+        id="templateAddModalCancel"
+      >
+        Bekor qilish
+      </button>
+
+      <button
+        type="button"
+        class="modal-save"
+        id="templateAddModalSave"
+      >
+        Qo‘shish
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="confirmModal" class="modal-overlay">
+  <div class="update-modal" style="max-width:380px;">
+    <div class="update-modal-header">
+      <div>
+        <div class="update-modal-title">Ishonchingiz komilmi?</div>
+        <div class="update-modal-subtitle" id="confirmModalText">Bu amalni qaytarib bo'lmaydi.</div>
+      </div>
+    </div>
+    <div class="update-modal-footer">
+      <button type="button" class="modal-cancel" id="confirmModalCancel">Bekor qilish</button>
+      <button type="button" class="modal-save" id="confirmModalOk" style="background:#A53B31;">Ha, tasdiqlayman</button>
+    </div>
+  </div>
+</div>
+
+<div id="bulkActionsBar" style="display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9998; background:var(--white); color:var(--text); border:1px solid var(--border); border-radius:14px; padding:14px 20px; align-items:center; gap:18px; box-shadow:0 15px 40px rgba(11,48,27,.18);">
+  <span id="bulkSelectedCount" style="font-size:13px; font-weight:650;">0 ta tanlandi</span>
+   <button type="button" id="bulkXlsBtn" style="height:36px; padding:0 14px; border-radius:8px; border:1px solid var(--border); background:#F5F0E3; color:var(--text); font-size:13px; font-weight:600; cursor:pointer;">Excel</button>
+  <button type="button" id="bulkDeleteBtn" style="height:36px; padding:0 14px; border-radius:8px; border:0; background:#A53B31; color:#fff; font-size:13px; font-weight:600; cursor:pointer;">O'chirish</button>
+</div>
+
+
+<script>
+
+/* =========================
+   CUSTOM CONFIRM
+========================= */
+
+let confirmCallback = null;
+
+const confirmModal =
+  document.getElementById("confirmModal");
+
+const confirmModalText =
+  document.getElementById("confirmModalText");
+
+const confirmModalCancel =
+  document.getElementById("confirmModalCancel");
+
+const confirmModalOk =
+  document.getElementById("confirmModalOk");
+
+function confirmAction(message, callback){
+
+  confirmModalText.textContent =
+    "Bu amalni qaytarib bo'lmaydi.";
+
+  confirmCallback =
+    callback;
+
+  confirmModal.style.display =
+    "flex";
+
+}
+
+confirmModalCancel.addEventListener(
+  "click",
+  function(){
+
+    confirmModal.style.display =
+      "none";
+
+    confirmCallback =
+      null;
+
+  }
+);
+
+confirmModal.addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === confirmModal){
+
+      confirmModal.style.display =
+        "none";
+
+      confirmCallback =
+        null;
+
+    }
+
+  }
+);
+
+confirmModalOk.addEventListener(
+  "click",
+  function(){
+
+    confirmModal.style.display =
+      "none";
+
+    if(confirmCallback){
+      confirmCallback();
+    }
+
+    confirmCallback =
+      null;
+
+  }
+);
+
+const loginPage =
+  document.getElementById("loginPage");
+
+const dashboardPage =
+  document.getElementById("dashboardPage");
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const error =
+  document.getElementById("error");
+
+const password =
+  document.getElementById("password");
+
+const togglePassword =
+  document.getElementById("togglePassword");
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+const clientList =
+  document.getElementById("clientList");
+
+const listTitle =
+  document.getElementById("listTitle");
+
+const listCount =
+  document.getElementById("listCount");
+
+const clientSearch =
+  document.getElementById("clientSearch");
+
+const clientTableHead =
+  document.getElementById("clientTableHead");
+
+const defaultTableHeadHTML =
+  clientTableHead.innerHTML;
+
+const defaultTableHeadColumns =
+  "36px 1.2fr .9fr .9fr 1.1fr 1fr 1.5fr 150px";
+
+
+/* =========================
+   MOCK CLIENT DATA
+========================= */
+
+let clients = [
+
+   {
+    id:1005,
+    name:"Sardor Karimov",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 90 123 45 67",
+    status:"active",
+    invitations:[]
+  },
+
+  {
+    id:1004,
+    name:"Azizbek Aliyev",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 91 222 33 44",
+    status:"active",
+    invitations:[]
+  },
+
+  {
+    id:1003,
+    name:"Nodirbek Mamatov",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 93 333 44 55",
+    status:"expired",
+    invitations:[]
+  },
+
+  {
+    id:1002,
+    name:"Javohir Rasulov",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 95 444 55 66",
+    status:"active",
+    invitations:[]
+  },
+
+  {
+    id:1001,
+    name:"Bekzod Tursunov",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 97 555 66 77",
+    status:"blocked",
+    invitations:[]
+  },
+
+  {
+    id:1000,
+    name:"Muhammadali Sobirov",
+    login: "sardor1005",
+    password: "12345678",
+    contact:"+998 99 666 77 88",
+    status:"active",
+    invitations:[]
+  }
+
+];
+let templates = [
+  {
+    name: "Classic",
+    link: "https://zappy.uz/t/classic",
+    active: 12,
+    expired: 3,
+    blocked: 1
+  },
+  {
+    name: "Elegant",
+    link: "https://zappy.uz/t/elegant",
+    active: 8,
+    expired: 2,
+    blocked: 0
+  },
+  {
+    name: "Minimal",
+    link: "https://zappy.uz/t/minimal",
+    active: 5,
+    expired: 1,
+    blocked: 1
+  }
+];
+
+let currentFilter = "all";
+let searchQuery = "";
+let sortOrder = "default";
+let editingTemplateIndex = null;
+let selectedTemplateIndices = [];
+
+function switchToTemplatesUI(){
+
+  clientSearch.placeholder =
+    "Templates qidirish...";
+
+  clientSearch.value = "";
+
+  searchQuery = "";
+
+  const expAsc =
+    document.getElementById("sortExpiryAsc");
+
+  const expDesc =
+    document.getElementById("sortExpiryDesc");
+
+  if(expAsc){
+    expAsc.hidden = true;
+  }
+
+  if(expDesc){
+    expDesc.hidden = true;
+  }
+
+  clientSort.value = "default";
+
+  sortOrder = "default";
+
+}
+
+function switchToClientsUI(){
+
+  clientTableHead.innerHTML =
+    defaultTableHeadHTML;
+
+  clientTableHead.style.gridTemplateColumns =
+    defaultTableHeadColumns;
+
+  bindSelectAllCheckbox();
+
+  clientSearch.placeholder =
+    "Mijozni qidirish...";
+
+  clientSearch.value = "";
+
+  searchQuery = "";
+
+  const expAsc =
+    document.getElementById("sortExpiryAsc");
+
+  const expDesc =
+    document.getElementById("sortExpiryDesc");
+
+  if(expAsc){
+    expAsc.hidden = false;
+  }
+
+  if(expDesc){
+    expDesc.hidden = false;
+  }
+
+  clientSort.value = "default";
+
+  sortOrder = "default";
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+function parseDate(str){
+
+  const parts =
+    str.split(".");
+
+  return new Date(
+    Number(parts[2]),
+    Number(parts[1]) - 1,
+    Number(parts[0])
+  );
+
+}
+
+function updateExpiredStatuses(){
+
+  const today =
+    new Date();
+
+  today.setHours(0,0,0,0);
+
+
+  clients.forEach(function(client){
+
+    if(client.status === "blocked"){
+      return;
+    }
+
+    const hasActive =
+      client.invitations.some(function(inv){
+
+        const d = parseDate(inv.expiry);
+
+        d.setHours(0,0,0,0);
+
+        return d >= today;
+
+      });
+
+    client.status =
+      hasActive ? "active" : "expired";
+
+  });
+
+}
+function getStatusText(status){
+
+  if(status === "active"){
+    return "Faol";
+  }
+
+  if(status === "expired"){
+    return "Muddati tugagan";
+  }
+
+  if(status === "blocked"){
+    return "Bloklangan";
+  }
+
+  return status;
+
+}
+
+
+/* =========================
+   COUNTS
+========================= */
+
+function updateCounts(){
+
+  updateExpiredStatuses();
+
+  document.getElementById("navCountAll").textContent =
+    clients.length;
+
+  const totalInvitations =
+    clients.reduce(function(sum, client){
+      return sum + client.invitations.length;
+    }, 0);
+
+  const navCountTemplates =
+    document.getElementById("navCountTemplates");
+
+  if(navCountTemplates){
+    navCountTemplates.textContent =
+      totalInvitations;
+  }
+
+  document.getElementById("navCountActive").textContent =
+    clients.filter(function(client){
+      return client.status === "active";
+    }).length;
+
+  document.getElementById("navCountExpired").textContent =
+    clients.filter(function(client){
+      return client.status === "expired";
+    }).length;
+
+  document.getElementById("navCountBlocked").textContent =
+    clients.filter(function(client){
+      return client.status === "blocked";
+    }).length;
+
+}
+
+
+/* =========================
+   RENDER CLIENTS
+========================= */
+
+function renderClients(){
+
+if (currentFilter === "templates") {
+  return renderTemplates();
+}
+
+updateExpiredStatuses();
+  let filtered =
+    currentFilter === "all"
+      ? clients
+      : clients.filter(function(client){
+          return client.status === currentFilter;
+        });
+
+
+  if(searchQuery){
+
+    const q =
+      searchQuery.toLowerCase();
+
+    filtered =
+      filtered.filter(function(client){
+
+        return (
+          client.name.toLowerCase().includes(q) ||
+          client.contact.toLowerCase().includes(q) ||
+          String(client.id).includes(q)
+        );
+
+      });
+
+  }
+
+ if(sortOrder === "az"){
+    filtered = filtered.slice().sort(function(a,b){
+      return a.name.localeCompare(b.name);
+    });
+  }
+
+  if(sortOrder === "za"){
+    filtered = filtered.slice().sort(function(a,b){
+      return b.name.localeCompare(a.name);
+    });
+  }
+
+  if(sortOrder === "newest"){
+    filtered = filtered.slice().sort(function(a,b){
+      return b.id - a.id;
+    });
+  }
+
+  if(sortOrder === "oldest"){
+    filtered = filtered.slice().sort(function(a,b){
+      return a.id - b.id;
+    });
+  }
+      if(sortOrder === "expiry_asc"){
+    filtered = filtered.slice().sort(function(a,b){
+      const da = a.expiry.split(".").reverse().join("-");
+      const db = b.expiry.split(".").reverse().join("-");
+      return new Date(da) - new Date(db);
+    });
+  }
+
+  if(sortOrder === "expiry_desc"){
+    filtered = filtered.slice().sort(function(a,b){
+      const da = a.expiry.split(".").reverse().join("-");
+      const db = b.expiry.split(".").reverse().join("-");
+      return new Date(db) - new Date(da);
+    });
+  }
+
+  const titles = {
+
+    all:"Jami mijozlar",
+
+    active:"Faol mijozlar",
+
+    expired:"Muddati tugagan",
+
+    blocked:"Bloklangan"
+
+  };
+
+
+  listTitle.textContent =
+    titles[currentFilter];
+
+  listCount.textContent =
+    filtered.length + " ta mijoz";
+
+
+  if(!filtered.length){
+
+    clientList.innerHTML =
+      '<div class="empty-list">Mijoz topilmadi.</div>';
+
+    return;
+
+  }
+
+
+  clientList.innerHTML =
+    filtered.map(function(client){
+
+          return (
+        '<div class="client-row ' + client.status + '">' +
+
+        '<div>' +
+          '<input type="checkbox" class="client-select-checkbox" data-id="' + client.id + '" style="width:16px; height:16px; cursor:pointer;">' +
+        '</div>' +
+
+        '<div class="client-name">' +
+  client.name +
+'</div>' +
+
+'<div class="client-contact">' +
+  client.login +
+'</div>' +
+
+'<div class="client-contact">' +
+  client.password +
+'</div>' +
+
+'<div class="client-contact">' +
+
+            '<a class="invitation-link" href="tel:' +
+              client.contact.replace(/\\s/g,"") +
+            '">' +
+
+              client.contact +
+
+            '</a>' +
+
+          '</div>' +
+
+                  '<div class="client-status">' +
+
+            '<span class="profile-status ' +
+              client.status +
+            '">' +
+
+              getStatusText(client.status) +
+
+            '</span>' +
+
+          '</div>' +
+
+                  '<div class="client-invitation">' +
+
+            '<button class="copy-link" data-invitations="' +
+              client.id +
+            '" style="width:max-content;">' +
+
+              'Taklifnomalar (' + client.invitations.length + ')' +
+
+            '</button>' +
+
+          '</div>' +
+
+     '<div class="client-actions">' +
+
+  '<button class="client-action update" data-update="' +
+    client.id +
+  '">' +
+
+    'Yangilash' +
+
+  '</button>' +
+
+  '<button class="client-action block" data-block="' +
+    client.id +
+  '">' +
+
+    (
+      client.status === "blocked"
+        ? "Blokdan chiqarish"
+        : "Bloklash"
+    ) +
+
+  '</button>' +
+
+  '<button class="client-action delete" data-delete="' +
+    client.id +
+  '">' +
+
+    'O‘chirish' +
+
+  '</button>' +
+
+'</div>' +
+
+        '</div>'
+      );
+
+    }).join("");
+
+
+  bindClientActions();
+
+  bindSelectionCheckboxes();
+
+}
+
+
+/* =========================
+   CLIENT ACTIONS
+========================= */
+let editingClientId = null;
+
+ /* UPDATE MODAL */
+
+  const updateModal =
+    document.getElementById("updateModal");
+
+
+  const updateModalClose =
+    document.getElementById("updateModalClose");
+
+  const updateModalCancel =
+    document.getElementById("updateModalCancel");
+
+  const updateModalSave =
+    document.getElementById("updateModalSave");
+
+      const newClientButton =
+  document.getElementById("newClientButton");
+
+newClientButton.addEventListener(
+  "click",
+  function(){
+
+    document.getElementById("updateName").value = "";
+    document.getElementById("updateLogin").value = "";
+    document.getElementById("updatePassword").value = "";
+    document.getElementById("updateContact").value = "";
+   const defaultExpiry = new Date();
+    defaultExpiry.setMonth(defaultExpiry.getMonth() + 2);
+    document.getElementById("updateExpiry").value =
+      defaultExpiry.toISOString().split("T")[0];
+       document.getElementById("updateInvitation").value = "";
+       document.getElementById("updateInvitationName").value = "";
+       document.getElementById("invitationNameFieldBlock").style.display = "block";
+       document.getElementById("invitationFieldBlock").style.display = "block";
+    document.getElementById("expiryFieldBlock").style.display = "block";
+    document.getElementById("updateTemplateFieldBlock").style.display = "block";
+    document.getElementById("nameFieldBlock").style.gridColumn = "auto";
+
+    populateTemplateSelect(document.getElementById("updateTemplate"));
+
+    editingClientId = null;
+
+    document.getElementById("updateModalTitle").textContent =
+      "Yangi mijoz qo‘shish";
+
+    document.getElementById("updateModalSave").textContent =
+      "Qo‘shish";
+
+    updateModal.style.display = "flex";
+
+    document.getElementById("updateName").focus();
+
+  }
+);
+
+
+
+  updateModalClose.addEventListener(
+    "click",
+    function(){
+
+      updateModal.style.display = "none";
+
+      editingClientId = null;
+
+    }
+  );
+
+
+  updateModalCancel.addEventListener(
+    "click",
+    function(){
+
+      updateModal.style.display = "none";
+
+      editingClientId = null;
+
+    }
+  );
+
+
+  updateModal.addEventListener(
+    "click",
+    function(event){
+
+      if(event.target === updateModal){
+
+        updateModal.style.display = "none";
+
+        editingClientId = null;
+
+      }
+
+    }
+  );
+
+
+updateModalSave.addEventListener(
+  "click",
+  function(){
+
+    const name =
+      document
+        .getElementById("updateName")
+        .value
+        .trim();
+
+    const login =
+      document
+        .getElementById("updateLogin")
+        .value
+        .trim();
+
+    const pass =
+      document
+        .getElementById("updatePassword")
+        .value
+        .trim();
+
+    const contact =
+      document
+        .getElementById("updateContact")
+        .value
+        .trim();
+
+    const expiryInput =
+      document
+        .getElementById("updateExpiry")
+        .value;
+
+        
+     const invitation =
+      document
+        .getElementById("updateInvitation")
+        .value
+        .trim();
+
+    const invitationName =
+      document
+        .getElementById("updateInvitationName")
+        .value
+        .trim();
+
+    const invitationTemplate =
+      editingClientId === null
+        ? document.getElementById("updateTemplate").value
+        : "";
+
+
+                 if(
+      !name ||
+      !login ||
+      !pass ||
+      !contact ||
+      (editingClientId === null && !expiryInput) ||
+      (editingClientId === null && !invitation) ||
+      (editingClientId === null && !invitationName)
+    ){
+
+      alert("Barcha maydonlarni to‘ldiring.");
+
+      return;
+
+    }
+
+
+    /* =========================
+       YANGI MIJOZ
+    ========================= */
+
+       if(editingClientId === null){
+
+      const expiry =
+        expiryInput
+          .split("-")
+          .reverse()
+          .join(".");
+
+
+      const newId =
+        clients.length
+          ? Math.max(
+              ...clients.map(function(item){
+                return item.id;
+              })
+            ) + 1
+          : 1000;
+
+
+      clients.push({
+
+        id:newId,
+
+        name:name,
+
+        login:login,
+
+        password:pass,
+
+        contact:contact,
+
+        status:"active",
+
+            invitations:[{name:invitationName, link:invitation, expiry:expiry, template:invitationTemplate}]
+
+      });
+
+
+           updateModal.style.display =
+        "none";
+
+
+      updateCounts();
+
+      renderClients();
+
+      showToast("“" + name + "” tizimga qo'shildi", "success");
+
+      return;
+
+    }
+
+    /* =========================
+       MAVJUD MIJOZNI YANGILASH
+    ========================= */
+
+    const client =
+      clients.find(function(item){
+
+        return item.id === editingClientId;
+
+      });
+
+
+    if(!client){
+      return;
+    }
+
+
+    client.name =
+      name;
+
+
+    client.login =
+      login;
+
+
+    client.password =
+      pass;
+
+
+    client.contact =
+      contact;
+
+
+      client.expiry =
+      expiryInput
+        .split("-")
+        .reverse()
+        .join(".");
+
+
+        updateModal.style.display =
+      "none";
+
+
+    editingClientId = null;
+
+
+    updateCounts();
+
+    renderClients();
+
+    showToast("“" + name + "” ma'lumoti yangilandi", "success");
+
+  }
+);
+
+function bindTemplateSelectionCheckboxes(){
+
+  document
+    .querySelectorAll(".template-select-checkbox")
+    .forEach(function(box){
+
+      box.checked =
+        selectedTemplateIndices.includes(Number(box.dataset.index));
+
+      box.addEventListener(
+        "change",
+        function(){
+
+          const index =
+            Number(this.dataset.index);
+
+          if(this.checked){
+
+            if(!selectedTemplateIndices.includes(index)){
+              selectedTemplateIndices.push(index);
+            }
+
+          }else{
+
+            selectedTemplateIndices =
+              selectedTemplateIndices.filter(function(item){
+                return item !== index;
+              });
+
+          }
+
+          const selectAllBox =
+            document.getElementById("selectAllTemplatesCheckbox");
+
+          const allBoxes =
+            document.querySelectorAll(".template-select-checkbox");
+
+          const allChecked =
+            allBoxes.length > 0 &&
+            Array.from(allBoxes).every(function(b){ return b.checked; });
+
+          if(selectAllBox){
+            selectAllBox.checked = allChecked;
+          }
+
+        }
+      );
+
+    });
+
+}
+
+function bindSelectAllTemplatesCheckbox(){
+
+  const selectAllBox =
+    document.getElementById("selectAllTemplatesCheckbox");
+
+  if(!selectAllBox){
+    return;
+  }
+
+  selectAllBox.addEventListener(
+    "change",
+    function(){
+
+      const checked =
+        this.checked;
+
+      document
+        .querySelectorAll(".template-select-checkbox")
+        .forEach(function(box){
+
+          box.checked =
+            checked;
+
+          const index =
+            Number(box.dataset.index);
+
+          if(checked){
+
+            if(!selectedTemplateIndices.includes(index)){
+              selectedTemplateIndices.push(index);
+            }
+
+          }else{
+
+            selectedTemplateIndices =
+              selectedTemplateIndices.filter(function(item){
+                return item !== index;
+              });
+
+          }
+
+        });
+
+    }
+  );
+
+}
+
+function computeTemplateCounts(templateName){
+
+  updateExpiredStatuses();
+
+  const counts =
+    { active:0, expired:0, blocked:0 };
+
+  clients.forEach(function(client){
+
+    const hasTemplate =
+      client.invitations.some(function(inv){
+        return inv.template === templateName;
+      });
+
+    if(!hasTemplate){
+      return;
+    }
+
+    if(client.status === "active"){
+      counts.active++;
+    }
+
+    if(client.status === "expired"){
+      counts.expired++;
+    }
+
+    if(client.status === "blocked"){
+      counts.blocked++;
+    }
+
+  });
+
+  return counts;
+
+}
+
+
+function populateTemplateSelect(selectEl, selectedValue){
+
+  if(!selectEl){
+    return;
+  }
+
+  selectEl.innerHTML =
+    templates.map(function(template){
+
+      return '<option value="' + template.name + '">' + template.name + '</option>';
+
+    }).join("");
+
+  if(selectedValue){
+    selectEl.value = selectedValue;
+  }
+
+}
+
+function renderTemplates(){
+
+  listTitle.textContent = "Templates";
+
+  listCount.textContent = "0 ta template";
+
+  const clientTableHead =
+  document.getElementById("clientTableHead");
+
+clientTableHead.style.gridTemplateColumns =
+  "50px 1.2fr 1.2fr .8fr .8fr .8fr 150px";
+
+clientTableHead.innerHTML =
+  '<div><input type="checkbox" id="selectAllTemplatesCheckbox" style="width:16px; height:16px; cursor:pointer;"></div>' +
+  '<div>Template nomi</div>' +
+  '<div>Havolasi</div>' +
+  '<div>Aktiv userlar</div>' +
+  '<div>Muddati tugagan userlar</div>' +
+  '<div>Bloklangan userlar</div>' +
+  '<div>Amallar</div>';
+
+
+
+let filteredTemplates =
+  templates.slice();
+
+if(searchQuery){
+
+  const q =
+    searchQuery.toLowerCase();
+
+  filteredTemplates =
+    filteredTemplates.filter(function(template){
+
+      return (
+        template.name.toLowerCase().includes(q) ||
+        template.link.toLowerCase().includes(q)
+      );
+
+    });
+
+}
+
+if(sortOrder === "az"){
+  filteredTemplates.sort(function(a,b){
+    return a.name.localeCompare(b.name);
+  });
+}
+
+if(sortOrder === "za"){
+  filteredTemplates.sort(function(a,b){
+    return b.name.localeCompare(a.name);
+  });
+}
+
+if(sortOrder === "newest"){
+  filteredTemplates.reverse();
+}
+
+listCount.textContent =
+  filteredTemplates.length + " ta template";
+
+let templatesHtml = "";
+filteredTemplates.forEach(function(template, index){
+
+  const realIndex =
+    templates.indexOf(template);
+
+  const counts =
+    computeTemplateCounts(template.name);
+
+  templatesHtml +=
+    '<div class="client-row" style="grid-template-columns:50px 1.2fr 1.2fr .8fr .8fr .8fr 150px;">' +
+      '<div><input type="checkbox" class="template-select-checkbox" data-index="' + realIndex + '" style="width:16px; height:16px; cursor:pointer;"></div>' +
+      '<div>' + template.name + '</div>' +
+      '<div>' + template.link + '</div>' +
+      '<div>' + counts.active + '</div>' +
+      '<div>' + counts.expired + '</div>' +
+      '<div>' + counts.blocked + '</div>' +
+      '<div class="client-actions">' +
+        '<button class="client-action update" data-template-edit="' + index + '">Tahrirlash</button>' +
+        '<button class="client-action delete" data-template-delete="' + index + '">O‘chirish</button>' +
+      '</div>' +
+    '</div>';
+
+});
+
+clientList.innerHTML =
+  templatesHtml +
+  '<div id="addTemplateRow" class="client-row" style="grid-template-columns:50px 1.2fr 1.2fr .8fr .8fr .8fr 150px; cursor:pointer;">' +
+    '<div></div>' +
+    '<div style="grid-column:2 / 8; color:#0B3D21; font-weight:600;">+ Templates qo‘shish</div>' +
+  '</div>';
+  
+
+  document
+  .querySelectorAll("[data-template-edit]")
+  .forEach(function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const filteredIndex =
+          Number(this.dataset.templateEdit);
+
+        const template =
+          filteredTemplates[filteredIndex];
+
+        if(!template){
+          return;
+        }
+
+               editingTemplateIndex =
+          templates.indexOf(template);
+
+        document.getElementById("templateAddModalTitle").textContent =
+          "Template tahrirlash";
+
+        document.getElementById("templateAddModalSubtitle").textContent =
+          "Template ma’lumotlarini o‘zgartiring";
+
+        document.getElementById("templateAddModalSave").textContent =
+          "Saqlash";
+
+        document.getElementById("templateName").value =
+          template.name;
+
+        document.getElementById("templateLink").value =
+          template.link;
+
+        document.getElementById("templateAddModal").style.display =
+          "flex";
+
+        document.getElementById("templateName").focus();
+
+      }
+    );
+
+  });
+
+document
+  .querySelectorAll("[data-template-delete]")
+  .forEach(function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const filteredIndex =
+          Number(this.dataset.templateDelete);
+
+        const template =
+          filteredTemplates[filteredIndex];
+
+        if(!template){
+          return;
+        }
+
+        confirmAction("Ishonchingiz komilmi?", function(){
+
+          const realIndex =
+            templates.indexOf(template);
+
+          if(realIndex === -1){
+            return;
+          }
+
+          const templateName =
+            template.name;
+
+          templates.splice(realIndex, 1);
+
+          renderTemplates();
+
+          showToast("“" + templateName + "” o'chirildi", "danger");
+
+        });
+
+      }
+    );
+
+  });
+
+    bindTemplateSelectionCheckboxes();
+
+bindSelectAllTemplatesCheckbox();
+
+const addTemplateRow = document.getElementById("addTemplateRow");
+const templateAddModal = document.getElementById("templateAddModal");
+const templateAddModalClose = document.getElementById("templateAddModalClose");
+const templateAddModalCancel = document.getElementById("templateAddModalCancel");
+
+if(addTemplateRow){
+  addTemplateRow.addEventListener("click", function(){
+
+    editingTemplateIndex = null;
+
+    document.getElementById("templateAddModalTitle").textContent =
+      "Template qo‘shish";
+
+    document.getElementById("templateAddModalSubtitle").textContent =
+      "Yangi template ma’lumotlarini kiriting";
+
+    document.getElementById("templateAddModalSave").textContent =
+      "Qo‘shish";
+
+    document.getElementById("templateName").value = "";
+    document.getElementById("templateLink").value = "";
+
+    templateAddModal.style.display = "flex";
+
+    document.getElementById("templateName").focus();
+
+  });
+}
+
+if(templateAddModalClose){
+  templateAddModalClose.addEventListener("click", function(){
+    templateAddModal.style.display = "none";
+  });
+}
+
+if(templateAddModalCancel){
+  templateAddModalCancel.addEventListener("click", function(){
+    templateAddModal.style.display = "none";
+  });
+}
+
+if(templateAddModal){
+  templateAddModal.addEventListener("click", function(e){
+
+    if(e.target === templateAddModal){
+      templateAddModal.style.display = "none";
+    }
+
+  });
+}
+
+}
+
+const templateAddModalSave =
+  document.getElementById("templateAddModalSave");
+
+if(templateAddModalSave){
+  templateAddModalSave.addEventListener(
+    "click",
+    function(){
+
+      const name =
+        document
+          .getElementById("templateName")
+          .value
+          .trim();
+
+      const link =
+        document
+          .getElementById("templateLink")
+          .value
+          .trim();
+
+          if(!name || !link){
+
+        showToast(
+          "Barcha maydonlarni to‘ldiring",
+          "danger"
+        );
+
+        return;
+      }
+
+      if(editingTemplateIndex !== null){
+
+        const template =
+          templates[editingTemplateIndex];
+
+        if(!template){
+          return;
+        }
+
+        template.name = name;
+        template.link = link;
+
+        editingTemplateIndex = null;
+
+        document.getElementById("templateName").value = "";
+        document.getElementById("templateLink").value = "";
+
+        document.getElementById("templateAddModal").style.display = "none";
+
+        renderTemplates();
+
+        showToast(
+          "“" + name + "” template yangilandi",
+          "success"
+        );
+
+        return;
+
+      }
+
+         templates.push({
+        name:name,
+        link:link
+      });
+
+      document.getElementById("templateName").value = "";
+      document.getElementById("templateLink").value = "";
+
+      document.getElementById("templateAddModal").style.display = "none";
+
+      renderTemplates();
+
+      showToast(
+        "“" + name + "” template qo‘shildi",
+        "success"
+      );
+
+    }
+  );
+}
+
+function bindClientActions(){
+
+  /* UPDATE */
+
+  document
+    .querySelectorAll("[data-update]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          const id =
+            Number(this.dataset.update);
+
+          editingClientId = id;
+          
+          const client =
+            clients.find(function(item){
+              return item.id === id;
+            });
+
+          if(!client){
+            return;
+          }
+
+          document.getElementById("updateName").value =
+            client.name;
+
+          document.getElementById("updateLogin").value =
+            client.login;
+
+          document.getElementById("updatePassword").value =
+            client.password;
+
+          document.getElementById("updateContact").value =
+            client.contact;
+
+       
+          
+                         document.getElementById("invitationNameFieldBlock").style.display = "none";
+          document.getElementById("invitationFieldBlock").style.display = "none";
+          document.getElementById("expiryFieldBlock").style.display = "none";
+          document.getElementById("updateTemplateFieldBlock").style.display = "none";
+          document.getElementById("nameFieldBlock").style.gridColumn = "1 / -1";
+
+          document.getElementById("updateModalTitle").textContent =
+  "Mijozni yangilash";
+
+document.getElementById("updateModalSave").textContent =
+  "Saqlash";
+
+          document.getElementById("updateModal").style.display =
+            "flex";
+
+          document.getElementById("updateName").focus();
+
+        }
+      );
+
+    });
+
+  /* INVITATIONS BUTTON */
+
+  document
+    .querySelectorAll("[data-invitations]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          const id =
+            Number(this.dataset.invitations);
+
+          openInvitationsModal(id);
+
+        }
+      );
+
+    });
+ 
+  /* COPY */
+
+  document
+    .querySelectorAll("[data-copy]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        async function(){
+
+          try{
+
+                       await navigator.clipboard.writeText(
+              this.dataset.copy
+            );
+
+            const el = this;
+
+            el.textContent =
+              "Nusxalandi ✓";
+
+            showToast("Nusxalandi", "success");
+
+            setTimeout(function(){
+
+              el.textContent =
+                "Nusxalash";
+
+            },1500);
+          }catch{
+
+            this.textContent =
+              "Xatolik";
+
+          }
+
+        }
+      );
+
+    });
+
+
+  /* BLOCK */
+
+  document
+    .querySelectorAll("[data-block]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+                         const id =
+            Number(this.dataset.block);
+
+          const client =
+            clients.find(function(item){
+              return item.id === id;
+            });
+
+          if(!client){
+            return;
+          }
+
+
+          confirmAction("Ishonchingiz komilmi?", function(){
+
+            client.status =
+              client.status === "blocked"
+                ? "active"
+                : "blocked";
+
+
+            updateCounts();
+
+            renderClients();
+
+            showToast(
+              "“" + client.name + "” " +
+              (client.status === "blocked" ? "bloklandi" : "blokdan chiqarildi"),
+              client.status === "blocked" ? "danger" : "success"
+            );
+
+          });
+
+        }
+      );
+
+    });
+
+  /* DELETE */
+
+  document
+    .querySelectorAll("[data-delete]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+                   const id =
+            Number(this.dataset.delete);
+
+          const client =
+            clients.find(function(item){
+              return item.id === id;
+            });
+
+          if(!client){
+            return;
+          }
+
+
+          confirmAction("Ishonchingiz komilmi?", function(){
+
+            const clientName =
+              client.name;
+
+            clients =
+              clients.filter(function(item){
+                return item.id !== id;
+              });
+
+
+            updateCounts();
+
+            renderClients();
+
+            showToast("“" + clientName + "” o'chirildi", "danger");
+
+          });
+
+        }
+      );
+
+    });
+
+}
+
+
+
+
+
+/* =========================
+   STAT FILTER
+========================= */
+
+function setFilter(filter){
+
+  currentFilter = filter;
+
+  switchToClientsUI();
+
+  document
+    .querySelectorAll(".stat-card")
+    .forEach(function(item){
+      item.classList.remove("active-card");
+    });
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(function(item){
+      item.classList.remove("active");
+    });
+
+  document
+    .querySelectorAll('.stat-card[data-filter="' + filter + '"]')
+    .forEach(function(item){
+      item.classList.add("active-card");
+    });
+
+  document
+    .querySelectorAll('.nav-filter[data-filter="' + filter + '"]')
+    .forEach(function(item){
+      item.classList.add("active");
+    });
+
+  renderClients();
+
+}
+
+document
+  .querySelectorAll(".stat-card")
+  .forEach(function(card){
+
+    card.addEventListener(
+      "click",
+      function(){
+        setFilter(this.dataset.filter);
+      }
+    );
+
+  });
+
+document
+  .querySelectorAll(".nav-filter")
+  .forEach(function(item){
+
+    item.addEventListener(
+      "click",
+      function(){
+        setFilter(this.dataset.filter);
+      }
+    );
+
+  });
+
+  const templatesButton = document.getElementById('templatesButton');
+
+if (templatesButton) {
+  templatesButton.addEventListener('click', function(){
+    document.querySelectorAll('.nav-item').forEach(function(item){
+      item.classList.remove('active');
+    });
+
+      templatesButton.classList.add('active');
+    currentFilter = "templates";
+switchToTemplatesUI();
+renderTemplates();
+  });
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+clientSearch.addEventListener(
+  "input",
+  function(){
+
+    searchQuery =
+      this.value.trim();
+
+    renderClients();
+
+  }
+);
+
+
+const clientSort =
+  document.getElementById("clientSort");
+
+clientSort.addEventListener(
+  "change",
+  function(){
+
+    sortOrder =
+      this.value;
+
+    renderClients();
+
+  }
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+loginForm.addEventListener(
+  "submit",
+  function(event){
+
+    event.preventDefault();
+
+
+    const login =
+      document
+        .getElementById("login")
+        .value
+        .trim();
+
+
+    const pass =
+      password
+        .value
+        .trim();
+
+
+        if(login && pass){
+
+      error.style.display =
+        "none";
+
+      loginPage.style.display =
+        "none";
+
+      dashboardPage.style.display =
+        "block";
+
+
+      updateCounts();
+
+      renderClients();
+
+      showToast("Master Adminga muvaffaqiyatli kirdingiz", "success");
+
+    }else{
+      error.style.display =
+        "block";
+
+    }
+
+  }
+);
+
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+togglePassword.addEventListener(
+  "click",
+  function(){
+
+    const eyeIcon =
+      document.getElementById("eyeIcon");
+
+    if(password.type === "password"){
+
+      password.type =
+        "text";
+
+      eyeIcon.innerHTML =
+        '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.4 18.4 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+    }else{
+
+      password.type =
+        "password";
+
+      eyeIcon.innerHTML =
+        '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+
+    }
+
+  }
+);
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message, type){
+
+  const container =
+    document.getElementById("toastContainer");
+
+  const toast =
+    document.createElement("div");
+
+  toast.className =
+    "toast " + type;
+
+  toast.textContent =
+    message;
+
+  container.appendChild(toast);
+
+  setTimeout(function(){
+    toast.classList.add("show");
+  }, 10);
+
+  setTimeout(function(){
+
+    toast.classList.remove("show");
+
+    setTimeout(function(){
+      toast.remove();
+    }, 400);
+
+  }, 3000);
+
+}
+
+/* =========================
+   INVITATIONS MODAL
+========================= */
+
+const invitationsModal =
+  document.getElementById("invitationsModal");
+
+const invitationsModalClose =
+  document.getElementById("invitationsModalClose");
+
+const invitationsList =
+  document.getElementById("invitationsList");
+
+let currentInvitationsClientId = null;
+
+function openInvitationsModal(clientId){
+
+  currentInvitationsClientId =
+    clientId;
+
+  const client =
+    clients.find(function(item){
+      return item.id === clientId;
+    });
+
+  if(!client){
+    return;
+  }
+
+  document.getElementById("invitationsModalTitle").textContent =
+    client.name + " — Taklifnomalar";
+    
+  const defaultInvModalExpiry = new Date();
+  defaultInvModalExpiry.setMonth(defaultInvModalExpiry.getMonth() + 2);
+  document.getElementById("invModalNewExpiry").value =
+    defaultInvModalExpiry.toISOString().split("T")[0];
+
+  populateTemplateSelect(document.getElementById("invModalNewTemplate"));
+
+
+    if(!client.invitations.length){
+
+    invitationsList.innerHTML =
+      '<div class="empty-list" style="padding:24px 0;">Taklifnomalar hozircha yo‘q.</div>';
+
+  }else{
+   invitationsList.innerHTML =
+    client.invitations.map(function(inv, index){
+
+      return (
+        '<div class="invitation-row">' +
+
+          '<div style="flex:1; min-width:0;">' +
+
+            '<div style="font-weight:650; font-size:13px; margin-bottom:2px;">' +
+              (inv.name || "Nomsiz") +
+              (inv.template ? ' <span style="font-weight:500; color:var(--muted);">(' + inv.template + ')</span>' : '') +
+            '</div>' +
+
+            '<a href="' + inv.link + '" target="_blank">' + inv.link + '</a>' +
+
+            '<div style="font-size:11px; color:var(--muted); margin-top:2px;">' +
+              inv.expiry + ' gacha' +
+            '</div>' +
+
+          '</div>' +
+
+          '<div class="invitation-row-actions">' +
+
+            '<button class="copy-link" data-copy="' + inv.link + '">Nusxalash</button>' +
+
+            '<button class="copy-link" onclick="window.open(\\'' + inv.link + '\\',\\'_blank\\')">Ochish</button>' +
+
+            '<button class="copy-link" data-edit-inv="' + index + '">Tahrirlash</button>' +
+
+            '<button class="copy-link" style="color:#A53B31;" data-delete-inv="' + index + '">O\\'chirish</button>' +
+
+          '</div>' +
+
+        '</div>'
+      );
+
+    }).join("");
+
+    bindInvitationCopyButtons();
+
+  }
+  invitationsModal.style.display =
+    "flex";
+
+}
+
+function bindInvitationCopyButtons(){
+
+  document
+    .querySelectorAll("#invitationsList [data-copy]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        async function(){
+
+          try{
+
+            await navigator.clipboard.writeText(
+              this.dataset.copy
+            );
+
+            showToast("Nusxalandi", "success");
+
+          }catch{
+
+            showToast("Xatolik", "danger");
+
+          }
+
+        }
+      );
+
+    });
+
+  document
+    .querySelectorAll("#invitationsList [data-edit-inv]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          const index =
+            Number(this.dataset.editInv);
+
+          openEditInvitationModal(index);
+
+        }
+      );
+
+    });
+
+  document
+    .querySelectorAll("#invitationsList [data-delete-inv]")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          const index =
+            Number(this.dataset.deleteInv);
+
+          const client =
+            clients.find(function(item){
+              return item.id === currentInvitationsClientId;
+            });
+
+          if(!client){
+            return;
+          }
+
+          confirmAction("Ishonchingiz komilmi?", function(){
+
+            client.invitations.splice(index, 1);
+
+            updateExpiredStatuses();
+
+            updateCounts();
+
+            renderClients();
+
+            openInvitationsModal(currentInvitationsClientId);
+
+            showToast("Taklifnoma o'chirildi", "danger");
+
+          });
+
+        }
+      );
+
+    });
+
+}
+
+document.getElementById("invModalAddBtn").addEventListener(
+  "click",
+  function(){
+
+    const name =
+      document.getElementById("invModalNewName").value.trim();
+
+    const link =
+      document.getElementById("invModalNewLink").value.trim();
+
+    const expiryVal =
+      document.getElementById("invModalNewExpiry").value;
+
+    if(!name || !link || !expiryVal){
+
+      showToast("Barcha maydonlarni to'ldiring", "danger");
+
+      return;
+
+    }
+
+    const client =
+      clients.find(function(item){
+        return item.id === currentInvitationsClientId;
+      });
+
+    if(!client){
+      return;
+    }
+
+      const expiry =
+      expiryVal.split("-").reverse().join(".");
+
+    const template =
+      document.getElementById("invModalNewTemplate").value;
+
+    client.invitations.push({
+      name:name,
+      link:link,
+      expiry:expiry,
+      template:template
+    });
+
+    document.getElementById("invModalNewName").value = "";
+    document.getElementById("invModalNewLink").value = "";
+    document.getElementById("invModalNewExpiry").value = "";
+
+    updateExpiredStatuses();
+
+    updateCounts();
+
+    renderClients();
+
+    openInvitationsModal(currentInvitationsClientId);
+
+    showToast("Yangi taklifnoma qo'shildi", "success");
+
+  }
+);
+
+invitationsModalClose.addEventListener(
+  "click",
+  function(){
+
+    invitationsModal.style.display =
+      "none";
+
+  }
+);
+
+invitationsModal.addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === invitationsModal){
+
+      invitationsModal.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+/* =========================
+   EDIT INVITATION MODAL
+========================= */
+
+let editingInvitationIndex = null;
+
+const editInvitationModal =
+  document.getElementById("editInvitationModal");
+
+function openEditInvitationModal(index){
+
+  const client =
+    clients.find(function(item){
+      return item.id === currentInvitationsClientId;
+    });
+
+  if(!client){
+    return;
+  }
+
+  const inv =
+    client.invitations[index];
+
+  if(!inv){
+    return;
+  }
+
+  editingInvitationIndex =
+    index;
+
+  document.getElementById("editInvName").value =
+    inv.name || "";
+
+  document.getElementById("editInvLink").value =
+    inv.link;
+
+  document.getElementById("editInvExpiry").value =
+    inv.expiry.split(".").reverse().join("-");
+
+  editInvitationModal.style.display =
+    "flex";
+
+}
+
+document.getElementById("editInvitationModalClose").addEventListener(
+  "click",
+  function(){
+
+    editInvitationModal.style.display =
+      "none";
+
+  }
+);
+
+document.getElementById("editInvitationModalCancel").addEventListener(
+  "click",
+  function(){
+
+    editInvitationModal.style.display =
+      "none";
+
+  }
+);
+
+editInvitationModal.addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === editInvitationModal){
+
+      editInvitationModal.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+document.getElementById("editInvitationModalSave").addEventListener(
+  "click",
+  function(){
+
+    const name =
+      document.getElementById("editInvName").value.trim();
+
+    const link =
+      document.getElementById("editInvLink").value.trim();
+
+    const expiryVal =
+      document.getElementById("editInvExpiry").value;
+
+    if(!name || !link || !expiryVal){
+
+      showToast("Barcha maydonlarni to'ldiring", "danger");
+
+      return;
+
+    }
+
+    const client =
+      clients.find(function(item){
+        return item.id === currentInvitationsClientId;
+      });
+
+    if(!client){
+      return;
+    }
+
+    const inv =
+      client.invitations[editingInvitationIndex];
+
+    if(!inv){
+      return;
+    }
+
+    inv.name =
+      name;
+
+    inv.link =
+      link;
+
+    inv.expiry =
+      expiryVal.split("-").reverse().join(".");
+
+    editInvitationModal.style.display =
+      "none";
+
+    updateExpiredStatuses();
+
+    updateCounts();
+
+    renderClients();
+
+    openInvitationsModal(currentInvitationsClientId);
+
+    showToast("Taklifnoma yangilandi", "success");
+
+  }
+);
+
+/* =========================
+   BULK SELECT
+========================= */
+
+let selectedClientIds = [];
+
+const bulkActionsBar =
+  document.getElementById("bulkActionsBar");
+
+const bulkSelectedCount =
+  document.getElementById("bulkSelectedCount");
+
+function updateBulkBar(){
+
+  if(selectedClientIds.length > 0){
+
+    bulkActionsBar.style.display = "flex";
+
+    bulkSelectedCount.textContent =
+      selectedClientIds.length + " ta tanlandi";
+
+  }else{
+
+    bulkActionsBar.style.display = "none";
+
+  }
+
+}
+
+function bindSelectionCheckboxes(){
+
+  document
+    .querySelectorAll(".client-select-checkbox")
+    .forEach(function(box){
+
+      box.checked =
+        selectedClientIds.includes(Number(box.dataset.id));
+
+      box.addEventListener(
+        "change",
+        function(){
+
+          const id =
+            Number(this.dataset.id);
+
+          if(this.checked){
+
+            if(!selectedClientIds.includes(id)){
+              selectedClientIds.push(id);
+            }
+
+          }else{
+
+            selectedClientIds =
+              selectedClientIds.filter(function(item){
+                return item !== id;
+              });
+
+          }
+
+          updateBulkBar();
+
+          const selectAllBox =
+            document.getElementById("selectAllCheckbox");
+
+          const allBoxes =
+            document.querySelectorAll(".client-select-checkbox");
+
+          const allChecked =
+            allBoxes.length > 0 &&
+            Array.from(allBoxes).every(function(b){ return b.checked; });
+
+          selectAllBox.checked =
+            allChecked;
+
+        }
+      );
+
+    });
+
+}
+
+function bindSelectAllCheckbox(){
+
+  const selectAllBox =
+    document.getElementById("selectAllCheckbox");
+
+  if(!selectAllBox){
+    return;
+  }
+
+  selectAllBox.addEventListener(
+    "change",
+    function(){
+
+      const checked =
+        this.checked;
+
+      document
+        .querySelectorAll(".client-select-checkbox")
+        .forEach(function(box){
+
+          box.checked =
+            checked;
+
+          const id =
+            Number(box.dataset.id);
+
+          if(checked){
+
+            if(!selectedClientIds.includes(id)){
+              selectedClientIds.push(id);
+            }
+
+          }else{
+
+            selectedClientIds =
+              selectedClientIds.filter(function(item){
+                return item !== id;
+              });
+
+          }
+
+        });
+
+      updateBulkBar();
+
+    }
+  );
+
+}
+
+bindSelectAllCheckbox();
+
+document.getElementById("bulkDeleteBtn").addEventListener(
+  "click",
+  function(){
+
+    confirmAction("Ishonchingiz komilmi?", function(){
+
+      clients =
+        clients.filter(function(item){
+          return !selectedClientIds.includes(item.id);
+        });
+
+      selectedClientIds = [];
+
+      updateBulkBar();
+
+      updateCounts();
+
+      renderClients();
+
+      showToast("Tanlangan mijozlar o'chirildi", "danger");
+
+    });
+
+  }
+);
+
+document.getElementById("bulkXlsBtn").addEventListener(
+  "click",
+  function(){
+
+    showToast("Excel eksport hali tayyor emas", "warning");
+
+  }
+);
+
+/* =========================
+   SIDEBAR TOGGLE
+========================= */
+
+const sidebar =
+  document.querySelector(".sidebar");
+
+const mainArea =
+  document.querySelector(".main");
+
+const sidebarToggle =
+  document.getElementById("sidebarToggle");
+
+const sidebarOpenBtn =
+  document.getElementById("sidebarOpenBtn");
+
+sidebarToggle.addEventListener(
+  "click",
+  function(){
+
+    sidebar.classList.add("collapsed");
+    mainArea.classList.add("expanded");
+    sidebarOpenBtn.style.display = "flex";
+
+  }
+);
+
+sidebarOpenBtn.addEventListener(
+  "click",
+  function(){
+
+    sidebar.classList.remove("collapsed");
+    mainArea.classList.remove("expanded");
+    sidebarOpenBtn.style.display = "none";
+
+  }
+);
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutButton.addEventListener(
+  "click",
+  function(){
+
+    dashboardPage.style.display =
+      "none";
+
+    loginPage.style.display =
+      "flex";
+
+
+    document.getElementById("login").value =
+      "";
+
+    password.value =
+      "";
+
+    error.style.display =
+      "none";
+
+
+    currentFilter =
+      "all";
+
+    searchQuery =
+      "";
+
+    clientSearch.value =
+      "";
+
+
+        setFilter("all");
+
+    showToast("Tizimdan chiqdingiz", "success");
+
+  }
+);
+
+</script>
+
+
+
+<div id="toastContainer"></div>
+
+</body>
+</html>`, {
+      headers: {
+        "content-type": "text/html; charset=UTF-8"
+      }
+    });
+  }
+};
